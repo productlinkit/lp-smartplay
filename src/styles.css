@@ -55,9 +55,9 @@ a { color: inherit; }
 .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
 /* ── Scene ─────────────────────────────────────────────────────────── */
-.backdrop { position: fixed; inset: 0; z-index: 0; background: var(--sky) url("assets/bg-portrait.webp") 78% 50% / cover no-repeat; }
+.backdrop { position: fixed; inset: 0; z-index: 0; background: var(--sky) url("/assets/bg-portrait.webp") 78% 50% / cover no-repeat; }
 @media (min-width: 640px) {
-  .backdrop { background-image: url("assets/bg-landscape.webp"); background-position: 88% 50%; }
+  .backdrop { background-image: url("/assets/bg-landscape.webp"); background-position: 88% 50%; }
 }
 .phone {
   position: relative; z-index: 1; isolation: isolate;

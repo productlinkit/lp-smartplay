@@ -1,6 +1,6 @@
 // All Smart Play settings live here. User-facing copy lives in i18n/my.json and i18n/en.json;
 // each package and app is named there under the same id used below.
-window.SP_CONFIG = {
+export default {
   cancelCode: "*XXXX#",   // placeholder until ATOM assigns the real code
   defaultLang: "my",
   defaultPackage: "3day",

@@ -1,6 +1,6 @@
+import C from "./config.js";
+
 (() => {
-  "use strict";
-  const C = window.SP_CONFIG;
   const app = document.getElementById("app");
   const devRoot = document.getElementById("dev");
   const MY_DIGITS = "၀၁၂၃၄၅၆၇၈၉";
@@ -394,7 +394,7 @@
       document.querySelectorAll(".genre").forEach(b => b.setAttribute("aria-pressed", b === el));
       document.getElementById("game-grid").innerHTML = gameTiles();
     },
-    "open-missing"(el) { toast(`${el.dataset.app}: link not set yet (config.js → apps.url)`); },
+    "open-missing"(el) { toast(`${el.dataset.app}: link not set yet (src/config.js → apps.url)`); },
     // demo panel
     "dev-toggle"() { state.devOpen = !state.devOpen; renderDev(); },
     "dev-set"(el) { sim[el.dataset.key] = el.dataset.val; saveSim(); renderDev(); },
@@ -467,6 +467,6 @@
       render();
     })
     .catch(() => {
-      app.innerHTML = '<div class="screen"><div class="panel">Could not load i18n/my.json and i18n/en.json. Serve this folder over http (for example: npx serve).</div></div>';
+      app.innerHTML = '<div class="screen"><div class="panel">Could not load i18n/my.json and i18n/en.json. Run the dev server (npm run dev).</div></div>';
     });
 })();
