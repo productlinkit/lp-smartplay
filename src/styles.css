@@ -177,7 +177,7 @@ a { color: inherit; }
 @keyframes spin { to { transform: rotate(360deg); } }
 
 .cta { display: grid; gap: 10px; }
-.fine { font-size: 0.8125rem; color: var(--ink-muted); line-height: 1.55; }
+.fine { font-size: 0.8125rem; color: var(--ink-muted); line-height: 1.55; text-align: center; }
 :lang(my) .fine { line-height: 1.8; }
 .fine a, .text-link { color: var(--navy); font-weight: 600; text-underline-offset: 3px; }
 .code { font-weight: 700; color: var(--navy); white-space: nowrap; }
