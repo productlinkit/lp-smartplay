@@ -14,7 +14,7 @@ export default {
   // Description copy: i18n key "apps.<id>.desc". "catalog" opens the in-portal game list instead of a url
   // (same 100 games and play links as the Smart Play portal); an app with neither shows a "link not set" note.
   apps: [
-    { id: "quizpro", name: "QuizPro", icon: "assets/quizpro.webp", url: "https://mm.quizpro.mobi" },
+    { id: "quizpro", name: "QuizPro", icon: "assets/quizpro.png", url: "https://mm.quizpro.mobi" },
     { id: "speakeasy", name: "SpeakEasy", icon: "assets/speakeasy.webp", url: "https://speakeasy.mobi" },
     { id: "playverse", name: "PlayVerse", icon: "assets/playverse.webp", url: "", catalog: "games.json" },
   ],
