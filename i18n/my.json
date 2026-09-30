@@ -1,0 +1,57 @@
+{
+  "brand": "Smart Play",
+  "lang.group": "ဘာသာစကား",
+
+  "landing.header": "လူတိုင်းအတွက် အကောင်းဆုံး 3-in-1 ဝန်ဆောင်မှုပက်ကေ့ချ်",
+  "landing.tagline": "အကောင်းဆုံး 3-in-1 Digital Buffet ကို အခုပဲ ရယူလိုက်ပါ! စာရင်းတစ်ကြိမ်သွင်းရုံဖြင့် QuizPro၊ SpeakEasy နှင့် PlayVerse အက်ပ်ဝန်ဆောင်မှုများကို စတင်လိုက်ပါ။",
+  "landing.packageLabel": "ပက်ကေ့ချ် ရွေးချယ်ပါ",
+  "landing.subscribe": "အခုပဲ ဝန်ဆောင်မှု ရယူလိုက်ပါ",
+  "landing.finePrint": "ပယ်ဖျက်သည်အထိ အလိုအလျောက် သက်တမ်းတိုးပါမည်။ သင့် ATOM ဖုန်းဘေလ် လက်ကျန်ငွေမှ ဖြတ်တောက်ပါမည်။ ဝန်ဆောင်မှု ပယ်ဖျက်ရန် {cancelCode} ကို ခေါ်ဆိုပါ။",
+  "landing.whatYouGet": "သင်ရရှိမည့် အရာများ",
+
+  "packages.daily.name": "နေ့စဉ်",
+  "packages.daily.access": "၁ ရက် အပြည့်အဝ အသုံးပြုခွင့်",
+  "packages.3day.name": "၃ ရက်စာ",
+  "packages.3day.access": "၃ ရက် အပြည့်အဝ အသုံးပြုခွင့်",
+  "price": "{amount} ကျပ်",
+
+  "apps.quizpro.desc": "ဆုလက်ဆောင်များ ပါဝင်သော ပျော်စရာ ဉာဏ်စမ်းပဟေဠိများ",
+  "apps.speakeasy.desc": "AI နှင့်အတူ လက်တွေ့ စကားပြော လေ့ကျင့်ပါ",
+  "apps.playverse.desc": "ချက်ချင်း ကစားနိုင်သော ဂိမ်း ၁၀၀",
+
+  "links.terms": "စည်းကမ်းသတ်မှတ်ချက်များ",
+  "links.privacy": "ကိုယ်ရေးအချက်အလက် မူဝါဒ",
+  "links.help": "အကူအညီ",
+
+  "confirm.service": "Smart Play · {name}",
+  "confirm.cancel": "ဝန်ဆောင်မှု ပယ်ဖျက်ရန် {cancelCode} ကို ခေါ်ဆိုပါ။",
+  "confirm.confirm": "အတည်ပြုရန်",
+  "confirm.notNow": "မလုပ်ဆောင်တော့ပါ",
+
+  "success.title": "ဝန်ဆောင်မှုရယူခြင်း အောင်မြင်ပါသည်။",
+  "success.text": "Smart Play မှ ကြိုဆိုပါတယ်။ ATOM မှ အတည်ပြု SMS ကို မကြာမီ ရရှိပါမည်။",
+  "success.button": "စတင်ကစားမည်",
+
+  "portal.title": "သင့် Smart Play အက်ပ်များ",
+  "portal.status.3day": "၃ ရက်စာ ပက်ကေ့ချ် · အသက်ဝင်နေသည်",
+  "portal.status.daily": "နေ့စဉ် ပက်ကေ့ချ် · အသက်ဝင်နေသည်",
+  "portal.open": "ဖွင့်မည်",
+  "portal.howToCancel": "ဝန်ဆောင်မှု ပယ်ဖျက်နည်း",
+
+  "blocked.title": "ကျေးဇူးပြု၍ ATOM မိုဘိုင်းဒေတာကို အသုံးပြုပါ",
+  "blocked.text": "Wi-Fi နှင့် VPN ကို ပိတ်ပြီး ထပ်မံကြိုးစားပါ။",
+  "blocked.button": "ထပ်မံကြိုးစားမည်",
+
+  "error.title": "ဝန်ဆောင်မှုရယူခြင်း မအောင်မြင်ပါ",
+  "error.text": "ဖုန်းဘေလ် လက်ကျန်ငွေကို စစ်ဆေးပါ၊ သို့မဟုတ် မိနစ်အနည်းငယ်အကြာတွင် ထပ်မံကြိုးစားပါ။",
+  "error.retry": "ထပ်မံကြိုးစားမည်",
+  "error.back": "ပက်ကေ့ချ်များသို့ ပြန်သွားမည်",
+
+  "games.count": "ဂိမ်း {n} ခု · ကစားရန် ဂိမ်းကို နှိပ်ပါ",
+  "games.search": "ဂိမ်း ရှာရန်",
+  "games.all": "အားလုံး",
+  "games.empty": "ရှာဖွေမှုနှင့် ကိုက်ညီသော ဂိမ်း မရှိပါ။",
+
+  "a11y.back": "နောက်သို့",
+  "a11y.close": "ပိတ်ရန်"
+}

@@ -1,0 +1,702 @@
+[
+ {
+  "name": "Mahjong Royal",
+  "genre": "Puzzle",
+  "service": "h5",
+  "url": "https://www.inlogic.sk/html5/222/index.html",
+  "thumb": "assets/games/mahjong-royal.webp"
+ },
+ {
+  "name": "Jewel Pets Match",
+  "genre": "Puzzle",
+  "service": "h5",
+  "url": "https://www.inlogic.sk/html5/095/index.html",
+  "thumb": "assets/games/jewel-pets-match.webp"
+ },
+ {
+  "name": "Block Blaster Puzzle",
+  "genre": "Puzzle",
+  "service": "h5",
+  "url": "https://www.inlogic.sk/html5/281/index.html",
+  "thumb": "assets/games/block-blaster-puzzle.webp"
+ },
+ {
+  "name": "Bus Parking Out",
+  "genre": "Puzzle",
+  "service": "h5",
+  "url": "https://www.inlogic.sk/html5/280/index.html",
+  "thumb": "assets/games/bus-parking-out.webp"
+ },
+ {
+  "name": "Royal Jewels Match",
+  "genre": "Puzzle",
+  "service": "h5",
+  "url": "https://www.inlogic.sk/html5/282/index.html",
+  "thumb": "assets/games/royal-jewels-match.webp"
+ },
+ {
+  "name": "Car Park Simulator",
+  "genre": "Arcade",
+  "service": "h5",
+  "url": "https://www.inlogic.sk/html5/271/index.html",
+  "thumb": "assets/games/car-park-simulator.webp"
+ },
+ {
+  "name": "Domino Adventure",
+  "genre": "Puzzle",
+  "service": "h5",
+  "url": "https://www.inlogic.sk/html5/269/index.html",
+  "thumb": "assets/games/domino-adventure.webp"
+ },
+ {
+  "name": "Tower Defenders",
+  "genre": "Arcade",
+  "service": "h5",
+  "url": "https://www.inlogic.sk/html5/258/index.html",
+  "thumb": "assets/games/tower-defenders.webp"
+ },
+ {
+  "name": "Wild Hunting Clash",
+  "genre": "Action",
+  "service": "h5",
+  "url": "https://www.inlogic.sk/html5/259/index.html",
+  "thumb": "assets/games/wild-hunting-clash.webp"
+ },
+ {
+  "name": "Clash Of Warriors",
+  "genre": "Action",
+  "service": "h5",
+  "url": "https://www.inlogic.sk/html5/206/index.html",
+  "thumb": "assets/games/clash-of-warriors.webp"
+ },
+ {
+  "name": "Cursed Treasure Defense",
+  "genre": "Strategy",
+  "service": "h5",
+  "url": "https://www.inlogic.sk/html5/225/index.html",
+  "thumb": "assets/games/cursed-treasure-defense.webp"
+ },
+ {
+  "name": "Farming Life",
+  "genre": "Arcade",
+  "service": "h5",
+  "url": "https://www.inlogic.sk/html5/245/index.html",
+  "thumb": "assets/games/farming-life.webp"
+ },
+ {
+  "name": "Towe Defense Clash",
+  "genre": "Strategy",
+  "service": "h5",
+  "url": "https://www.inlogic.sk/html5/213/index.html",
+  "thumb": "assets/games/towe-defense-clash.webp"
+ },
+ {
+  "name": "Tower Defense Zombies",
+  "genre": "Strategy",
+  "service": "h5",
+  "url": "https://www.inlogic.sk/html5/218/index.html",
+  "thumb": "assets/games/tower-defense-zombies.webp"
+ },
+ {
+  "name": "3D Match Puzzle Mania",
+  "genre": "Puzzle",
+  "service": "h5",
+  "url": "https://www.inlogic.sk/html5/275/index.html",
+  "thumb": "assets/games/3d-match-puzzle-mania.webp"
+ },
+ {
+  "name": "Bubble Mania Shooter",
+  "genre": "Puzzle",
+  "service": "h5",
+  "url": "https://www.inlogic.sk/html5/283/index.html",
+  "thumb": "assets/games/bubble-mania-shooter.webp"
+ },
+ {
+  "name": "Drag Racing City",
+  "genre": "Racing",
+  "service": "h5",
+  "url": "https://www.inlogic.sk/html5/209/index.html",
+  "thumb": "assets/games/drag-racing-city.webp"
+ },
+ {
+  "name": "Egg Hunt Mania",
+  "genre": "Arcade",
+  "service": "h5",
+  "url": "https://www.inlogic.sk/html5/251/index.html",
+  "thumb": "assets/games/egg-hunt-mania.webp"
+ },
+ {
+  "name": "Mr Super Fire",
+  "genre": "Action",
+  "service": "h5",
+  "url": "https://www.inlogic.sk/html5/185/index.html",
+  "thumb": "assets/games/mr-super-fire.webp"
+ },
+ {
+  "name": "Prison Escape",
+  "genre": "Arcade",
+  "service": "h5",
+  "url": "https://www.inlogic.sk/html5/255/index.html",
+  "thumb": "assets/games/prison-escape.webp"
+ },
+ {
+  "name": "Road Madness",
+  "genre": "Racing",
+  "service": "h5",
+  "url": "https://www.inlogic.sk/html5/227/index.html",
+  "thumb": "assets/games/road-madness.webp"
+ },
+ {
+  "name": "Space Survivor",
+  "genre": "Arcade",
+  "service": "h5",
+  "url": "https://www.inlogic.sk/html5/265/index.html",
+  "thumb": "assets/games/space-survivor.webp"
+ },
+ {
+  "name": "Train Bandit",
+  "genre": "Arcade",
+  "service": "h5",
+  "url": "https://www.inlogic.sk/html5/229/index.html",
+  "thumb": "assets/games/train-bandit.webp"
+ },
+ {
+  "name": "Wunder Planes",
+  "genre": "Arcade",
+  "service": "h5",
+  "url": "https://www.inlogic.sk/html5/203/index.html",
+  "thumb": "assets/games/wunder-planes.webp"
+ },
+ {
+  "name": "Zombie Apocalypse",
+  "genre": "Action",
+  "service": "h5",
+  "url": "https://www.inlogic.sk/html5/231/index.html",
+  "thumb": "assets/games/zombie-apocalypse.webp"
+ },
+ {
+  "name": "Zombie Defense War",
+  "genre": "Action",
+  "service": "h5",
+  "url": "https://www.inlogic.sk/html5/262/index.html",
+  "thumb": "assets/games/zombie-defense-war.webp"
+ },
+ {
+  "name": "Zombie Hunter Survival",
+  "genre": "Action",
+  "service": "h5",
+  "url": "https://www.inlogic.sk/html5/234/index.html",
+  "thumb": "assets/games/zombie-hunter-survival.webp"
+ },
+ {
+  "name": "Zumba Quest",
+  "genre": "Arcade",
+  "service": "h5",
+  "url": "https://www.inlogic.sk/html5/273/index.html",
+  "thumb": "assets/games/zumba-quest.webp"
+ },
+ {
+  "name": "Cooking Mania",
+  "genre": "Casual",
+  "service": "h5",
+  "url": "https://www.inlogic.sk/html5/220/index.html",
+  "thumb": "assets/games/cooking-mania.webp"
+ },
+ {
+  "name": "Emergency Jam",
+  "genre": "Puzzle",
+  "service": "h5",
+  "url": "https://www.inlogic.sk/html5/294/index.html",
+  "thumb": "assets/games/emergency-jam.webp"
+ },
+ {
+  "name": "Idle Zoo",
+  "genre": "Casual",
+  "service": "h5",
+  "url": "https://www.inlogic.sk/html5/143/index.html",
+  "thumb": "assets/games/idle-zoo.webp"
+ },
+ {
+  "name": "Zombie Road",
+  "genre": "Arcade",
+  "service": "h5",
+  "url": "https://www.inlogic.sk/html5/090/index.html",
+  "thumb": "assets/games/zombie-road.webp"
+ },
+ {
+  "name": "Street Driver",
+  "genre": "Racing",
+  "service": "h5",
+  "url": "https://www.inlogic.sk/html5/015/index.html",
+  "thumb": "assets/games/street-driver.webp"
+ },
+ {
+  "name": "Football Penalty",
+  "genre": "Sports",
+  "service": "h5",
+  "url": "https://www.inlogic.sk/html5/268/index.html",
+  "thumb": "assets/games/football-penalty.webp"
+ },
+ {
+  "name": "2048 Cube Merge",
+  "genre": "Puzzle",
+  "service": "h5",
+  "url": "https://www.inlogic.sk/html5/290/index.html",
+  "thumb": "assets/games/2048-cube-merge.webp"
+ },
+ {
+  "name": "Zumba Story",
+  "genre": "Arcade",
+  "service": "h5",
+  "url": "https://www.inlogic.sk/html5/285/index.html",
+  "thumb": "assets/games/zumba-story.webp"
+ },
+ {
+  "name": "Drifting Mania",
+  "genre": "Racing",
+  "service": "h5",
+  "url": "https://www.inlogic.sk/html5/190/index.html",
+  "thumb": "assets/games/drifting-mania.webp"
+ },
+ {
+  "name": "Ludo Fever",
+  "genre": "PVP",
+  "service": "h5",
+  "url": "https://www.inlogic.sk/html5/189/index.html",
+  "thumb": "assets/games/ludo-fever.webp"
+ },
+ {
+  "name": "Ludo World",
+  "genre": "PVP",
+  "service": "h5",
+  "url": "https://www.inlogic.sk/html5/288/index.html",
+  "thumb": "assets/games/ludo-world.webp"
+ },
+ {
+  "name": "Tiny Football Club",
+  "genre": "Sports",
+  "service": "h5",
+  "url": "https://www.inlogic.sk/html5/223/index.html",
+  "thumb": "assets/games/tiny-football-club.webp"
+ },
+ {
+  "name": "Solitare 15 In 1 Collection",
+  "genre": "Casual",
+  "service": "h5",
+  "url": "https://www.inlogic.sk/html5/195/index.html",
+  "thumb": "assets/games/solitare-15-in-1-collection.webp"
+ },
+ {
+  "name": "Cursed Treasure Tower Defense",
+  "genre": "Strategy",
+  "service": "h5",
+  "url": "https://www.inlogic.sk/html5/225/index.html",
+  "thumb": "assets/games/cursed-treasure-tower-defense.webp"
+ },
+ {
+  "name": "Idle Zoo Park",
+  "genre": "Casual",
+  "service": "h5",
+  "url": "https://www.inlogic.sk/html5/143/index.html",
+  "thumb": "assets/games/idle-zoo-park.webp"
+ },
+ {
+  "name": "Cursed Treasure Quest",
+  "genre": "Strategy",
+  "service": "h5",
+  "url": "https://www.inlogic.sk/html5/225/index.html",
+  "thumb": "assets/games/cursed-treasure-quest.webp"
+ },
+ {
+  "name": "Crazy Fruit Merge",
+  "genre": "Puzzle",
+  "service": "h5",
+  "url": "https://www.inlogic.sk/html5/297/index.html",
+  "thumb": "assets/games/crazy-fruit-merge.webp"
+ },
+ {
+  "name": "Merge Fantasy",
+  "genre": "Puzzle",
+  "service": "h5",
+  "url": "https://www.inlogic.sk/html5/298/index.html",
+  "thumb": "assets/games/merge-fantasy.webp"
+ },
+ {
+  "name": "Jewel Dress Up",
+  "genre": "Puzzle",
+  "service": "h5",
+  "url": "https://www.inlogic.sk/html5/292/index.html",
+  "thumb": "assets/games/jewel-dress-up.webp"
+ },
+ {
+  "name": "Table Tennis Open",
+  "genre": "Sports",
+  "service": "h5",
+  "url": "https://www.inlogic.sk/html5/295/index.html",
+  "thumb": "assets/games/table-tennis-open.webp"
+ },
+ {
+  "name": "Chubby Birds",
+  "genre": "Arcade",
+  "service": "h5",
+  "url": "https://www.inlogic.sk/html5/017/index.html",
+  "thumb": "assets/games/chubby-birds.webp"
+ },
+ {
+  "name": "Archer Go",
+  "genre": "Arcade",
+  "service": "h5",
+  "url": "https://www.inlogic.sk/html5/296/index.html",
+  "thumb": "assets/games/archer-go.webp"
+ },
+ {
+  "name": "Chess Duel",
+  "genre": "Strategy",
+  "service": "h5",
+  "url": "https://www.inlogic.sk/html5/287/index.html",
+  "thumb": "assets/games/chess-duel.webp"
+ },
+ {
+  "name": "Archer Mater",
+  "genre": "Arcade",
+  "service": "h5",
+  "url": "https://www.inlogic.sk/html5/289/index.html",
+  "thumb": "assets/games/archer-mater.webp"
+ },
+ {
+  "name": "Knife Madness",
+  "genre": "Arcade",
+  "service": "h5",
+  "url": "https://www.inlogic.sk/html5/303/index.html",
+  "thumb": "assets/games/knife-madness.webp"
+ },
+ {
+  "name": "Ludo Star",
+  "genre": "PVP",
+  "service": "h5",
+  "url": "https://www.inlogic.sk/html5/304/index.html",
+  "thumb": "assets/games/ludo-star.webp"
+ },
+ {
+  "name": "2048 Matchballs",
+  "genre": "Puzzle",
+  "service": "h5",
+  "url": "https://www.inlogic.sk/html5/276/index.html",
+  "thumb": "assets/games/2048-matchballs.webp"
+ },
+ {
+  "name": "2048 Number Match",
+  "genre": "Puzzle",
+  "service": "h5",
+  "url": "https://www.inlogic.sk/html5/263/index.html",
+  "thumb": "assets/games/2048-number-match.webp"
+ },
+ {
+  "name": "Garden Block Puzzle",
+  "genre": "Puzzle",
+  "service": "h5",
+  "url": "https://www.inlogic.sk/html5/302/index.html",
+  "thumb": "assets/games/garden-block-puzzle.webp"
+ },
+ {
+  "name": "Jelly Block Puzzle",
+  "genre": "Puzzle",
+  "service": "h5",
+  "url": "https://www.inlogic.sk/html5/270/index.html",
+  "thumb": "assets/games/jelly-block-puzzle.webp"
+ },
+ {
+  "name": "Mahjong Tour",
+  "genre": "Puzzle",
+  "service": "h5",
+  "url": "https://www.inlogic.sk/html5/286/index.html",
+  "thumb": "assets/games/mahjong-tour.webp"
+ },
+ {
+  "name": "Match 3D Puzzle Saga",
+  "genre": "Puzzle",
+  "service": "h5",
+  "url": "https://www.inlogic.sk/html5/291/index.html",
+  "thumb": "assets/games/match-3d-puzzle-saga.webp"
+ },
+ {
+  "name": "Quiz Mania Trivia Game",
+  "genre": "Puzzle",
+  "service": "h5",
+  "url": "https://www.inlogic.sk/html5/279/index.html",
+  "thumb": "assets/games/quiz-mania-trivia-game.webp"
+ },
+ {
+  "name": "Shiny Jewels",
+  "genre": "Puzzle",
+  "service": "h5",
+  "url": "https://www.inlogic.sk/html5/299/index.html",
+  "thumb": "assets/games/shiny-jewels.webp"
+ },
+ {
+  "name": "Marbles Garden",
+  "genre": "Puzzle",
+  "service": "h5",
+  "url": "https://www.inlogic.sk/html5/176/index.html",
+  "thumb": "assets/games/marbles-garden.webp"
+ },
+ {
+  "name": "Tank Battle",
+  "genre": "Arcade",
+  "service": "h5",
+  "url": "https://www.inlogic.sk/html5/171/index.html",
+  "thumb": "assets/games/tank-battle.webp"
+ },
+ {
+  "name": "Zombie Killer",
+  "genre": "Action",
+  "service": "h5",
+  "url": "https://www.inlogic.sk/html5/142/index.html",
+  "thumb": "assets/games/zombie-killer.webp"
+ },
+ {
+  "name": "Word Season",
+  "genre": "Puzzle",
+  "service": "h5",
+  "url": "https://www.inlogic.sk/html5/308/index.html",
+  "thumb": "assets/games/word-season.webp"
+ },
+ {
+  "name": "Ship Out",
+  "genre": "Puzzle",
+  "service": "h5",
+  "url": "https://www.inlogic.sk/html5/307/index.html",
+  "thumb": "assets/games/ship-out.webp"
+ },
+ {
+  "name": "My Tiny Market",
+  "genre": "Casual",
+  "service": "h5",
+  "url": "https://www.inlogic.sk/html5/310/index.html",
+  "thumb": "assets/games/my-tiny-market.webp"
+ },
+ {
+  "name": "Farm Merge Harvest",
+  "genre": "Puzzle",
+  "service": "h5",
+  "url": "https://www.inlogic.sk/html5/309/index.html",
+  "thumb": "assets/games/farm-merge-harvest.webp"
+ },
+ {
+  "name": "Guinea Piggy Match",
+  "genre": "Puzzle",
+  "service": "h5",
+  "url": "https://www.inlogic.sk/html5/319/index.html",
+  "thumb": "assets/games/guinea-piggy-match.webp"
+ },
+ {
+  "name": "Hidden Object Story",
+  "genre": "Puzzle",
+  "service": "h5",
+  "url": "https://www.inlogic.sk/html5/313/index.html",
+  "thumb": "assets/games/hidden-object-story.webp"
+ },
+ {
+  "name": "Mma Super Fight",
+  "genre": "Sports",
+  "service": "h5",
+  "url": "https://www.inlogic.sk/html5/314/index.html",
+  "thumb": "assets/games/mma-super-fight.webp"
+ },
+ {
+  "name": "Mahjong Cute Tiles",
+  "genre": "Puzzle",
+  "service": "h5",
+  "url": "https://www.inlogic.sk/html5/315/index.html",
+  "thumb": "assets/games/mahjong-cute-tiles.webp"
+ },
+ {
+  "name": "Geometry Rush",
+  "genre": "Arcade",
+  "service": "h5",
+  "url": "https://www.inlogic.sk/html5/316/index.html",
+  "thumb": "assets/games/geometry-rush.webp"
+ },
+ {
+  "name": "Happy Bubbles",
+  "genre": "Puzzle",
+  "service": "h5",
+  "url": "https://www.inlogic.sk/html5/317/index.html",
+  "thumb": "assets/games/happy-bubbles.webp"
+ },
+ {
+  "name": "Jewel Legend Quest",
+  "genre": "Puzzle",
+  "service": "h5",
+  "url": "https://www.inlogic.sk/html5/261/index.html",
+  "thumb": "assets/games/jewel-legend-quest.webp"
+ },
+ {
+  "name": "Kitchen Sorting",
+  "genre": "Puzzle",
+  "service": "h5",
+  "url": "https://www.inlogic.sk/html5/274/index.html",
+  "thumb": "assets/games/kitchen-sorting.webp"
+ },
+ {
+  "name": "Cooking Block Puzzle",
+  "genre": "Puzzle",
+  "service": "h5",
+  "url": "https://www.inlogic.sk/html5/320/index.html",
+  "thumb": "assets/games/cooking-block-puzzle.webp"
+ },
+ {
+  "name": "Guinea Piggy Matching",
+  "genre": "Puzzle",
+  "service": "h5",
+  "url": "https://www.inlogic.sk/html5/319/index.html",
+  "thumb": "assets/games/guinea-piggy-matching.webp"
+ },
+ {
+  "name": "Mega Shark",
+  "genre": "Arcade",
+  "service": "h5",
+  "url": "https://www.inlogic.sk/html5/318/index.html",
+  "thumb": "assets/games/mega-shark.webp"
+ },
+ {
+  "name": "Word Clash",
+  "genre": "Puzzle",
+  "service": "h5",
+  "url": "https://www.inlogic.sk/html5/293/index.html",
+  "thumb": "assets/games/word-clash.webp"
+ },
+ {
+  "name": "Winter Vacation",
+  "genre": "Puzzle",
+  "service": "h5",
+  "url": "https://www.inlogic.sk/html5/167/index.html",
+  "thumb": "assets/games/winter-vacation.webp"
+ },
+ {
+  "name": "Speedy Runner",
+  "genre": "Arcade",
+  "service": "h5",
+  "url": "https://www.inlogic.sk/html5/321/index.html",
+  "thumb": "assets/games/speedy-runner.webp"
+ },
+ {
+  "name": "Snow Board King 2024",
+  "genre": "Sports",
+  "service": "h5",
+  "url": "https://www.inlogic.sk/html5/230/index.html",
+  "thumb": "assets/games/snow-board-king-2024.webp"
+ },
+ {
+  "name": "Ski King 2024",
+  "genre": "Sports",
+  "service": "h5",
+  "url": "https://www.inlogic.sk/html5/232/index.html",
+  "thumb": "assets/games/ski-king-2024.webp"
+ },
+ {
+  "name": "Santa Quest",
+  "genre": "Arcade",
+  "service": "h5",
+  "url": "https://www.inlogic.sk/html5/125/index.html",
+  "thumb": "assets/games/santa-quest.webp"
+ },
+ {
+  "name": "Santa Run",
+  "genre": "Arcade",
+  "service": "h5",
+  "url": "https://www.inlogic.sk/html5/021/index.html",
+  "thumb": "assets/games/santa-run.webp"
+ },
+ {
+  "name": "Jewel Christmas Story",
+  "genre": "Puzzle",
+  "service": "h5",
+  "url": "https://www.inlogic.sk/html5/200/index.html",
+  "thumb": "assets/games/jewel-christmas-story.webp"
+ },
+ {
+  "name": "Jewel Christmas Mania",
+  "genre": "Puzzle",
+  "service": "h5",
+  "url": "https://www.inlogic.sk/html5/169/index.html",
+  "thumb": "assets/games/jewel-christmas-mania.webp"
+ },
+ {
+  "name": "Christmas Fishing",
+  "genre": "Casual",
+  "service": "h5",
+  "url": "https://www.inlogic.sk/html5/170/index.html",
+  "thumb": "assets/games/christmas-fishing.webp"
+ },
+ {
+  "name": "Candy Jewels",
+  "genre": "Puzzle",
+  "service": "h5",
+  "url": "https://www.inlogic.sk/html5/324/index.html",
+  "thumb": "assets/games/candy-jewels.webp"
+ },
+ {
+  "name": "Conquer.Io",
+  "genre": "Arcade",
+  "service": "h5",
+  "url": "https://www.inlogic.sk/html5/323/index.html",
+  "thumb": "assets/games/conquer-io.webp"
+ },
+ {
+  "name": "Fury Tanks",
+  "genre": "Arcade",
+  "service": "h5",
+  "url": "https://www.inlogic.sk/html5/322/index.html",
+  "thumb": "assets/games/fury-tanks.webp"
+ },
+ {
+  "name": "Word Stars",
+  "genre": "Puzzle",
+  "service": "h5",
+  "url": "https://www.inlogic.sk/html5/325/index.html",
+  "thumb": "assets/games/word-stars.webp"
+ },
+ {
+  "name": "2048 Merge World",
+  "genre": "Puzzle",
+  "service": "h5",
+  "url": "https://www.inlogic.sk/html5/327/index.html",
+  "thumb": "assets/games/2048-merge-world.webp"
+ },
+ {
+  "name": "Merge Home Mania",
+  "genre": "Puzzle",
+  "service": "h5",
+  "url": "https://www.inlogic.sk/html5/326/index.html",
+  "thumb": "assets/games/merge-home-mania.webp"
+ },
+ {
+  "name": "Pool Master",
+  "genre": "Sports",
+  "service": "h5",
+  "url": "https://www.inlogic.sk/html5/311/index.html",
+  "thumb": "assets/games/pool-master.webp"
+ },
+ {
+  "name": "Magic Bubbles",
+  "genre": "Arcade",
+  "service": "h5",
+  "url": "https://www.inlogic.sk/html5/328/index.html",
+  "thumb": "assets/games/magic-bubbles.webp"
+ },
+ {
+  "name": "Tap 3D Blocks",
+  "genre": "Puzzle",
+  "service": "h5",
+  "url": "https://www.inlogic.sk/html5/329/index.html",
+  "thumb": "assets/games/tap-3d-blocks.webp"
+ },
+ {
+  "name": "Pizza Now",
+  "genre": "Puzzle",
+  "service": "h5",
+  "url": "https://www.inlogic.sk/html5/330/index.html",
+  "thumb": "assets/games/pizza-now.webp"
+ }
+]

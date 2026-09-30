@@ -1,0 +1,57 @@
+{
+  "brand": "Smart Play",
+  "lang.group": "Language",
+
+  "landing.header": "Premium 3-in-1 Package Subscription for Everyone!",
+  "landing.tagline": "Unlock your 3-in-1 digital buffet! Subscribe once and enjoy QuizPro, SpeakEasy, and PlayVerse all in one.",
+  "landing.packageLabel": "Choose your package",
+  "landing.subscribe": "Subscribe Now",
+  "landing.finePrint": "Auto-renews until you cancel. Charged to your ATOM balance. To cancel, dial {cancelCode}.",
+  "landing.whatYouGet": "What you get",
+
+  "packages.daily.name": "Daily",
+  "packages.daily.access": "1 day full access",
+  "packages.3day.name": "3 Days",
+  "packages.3day.access": "3 days full access",
+  "price": "{amount} MMK",
+
+  "apps.quizpro.desc": "Fun trivia quizzes with rewards",
+  "apps.speakeasy.desc": "Practice real speaking with AI",
+  "apps.playverse.desc": "100 instant-play games",
+
+  "links.terms": "Terms & Conditions",
+  "links.privacy": "Privacy Policy",
+  "links.help": "Help",
+
+  "confirm.service": "Smart Play · {name}",
+  "confirm.cancel": "To cancel, dial {cancelCode}.",
+  "confirm.confirm": "Confirm",
+  "confirm.notNow": "Not now",
+
+  "success.title": "Subscription successful!",
+  "success.text": "Welcome to Smart Play. You'll get a confirmation SMS from ATOM.",
+  "success.button": "Start Playing",
+
+  "portal.title": "Your Smart Play apps",
+  "portal.status.3day": "3-Day plan · Active",
+  "portal.status.daily": "Daily plan · Active",
+  "portal.open": "Open",
+  "portal.howToCancel": "How to cancel",
+
+  "blocked.title": "Please use ATOM mobile data",
+  "blocked.text": "Turn off Wi-Fi and VPN, then try again.",
+  "blocked.button": "Try Again",
+
+  "error.title": "Subscription not completed",
+  "error.text": "Please check your balance or try again in a few minutes.",
+  "error.retry": "Try Again",
+  "error.back": "Back to packages",
+
+  "games.count": "{n} games · tap a game to play",
+  "games.search": "Search games",
+  "games.all": "All",
+  "games.empty": "No games match your search.",
+
+  "a11y.back": "Back",
+  "a11y.close": "Close"
+}
