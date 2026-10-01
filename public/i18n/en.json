@@ -10,9 +10,9 @@
   "landing.whatYouGet": "What you get",
 
   "packages.daily.name": "Daily",
-  "packages.daily.access": "1 day full access",
+  "packages.daily.access": "1 day free access",
   "packages.3day.name": "3 Days",
-  "packages.3day.access": "3 days full access",
+  "packages.3day.access": "3 day free access",
   "price": "{amount} MMK",
 
   "apps.quizpro.desc": "Fun trivia quizzes with rewards",
