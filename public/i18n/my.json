@@ -10,9 +10,9 @@
   "landing.whatYouGet": "သင်ရရှိမည့် အရာများ",
 
   "packages.daily.name": "နေ့စဉ်",
-  "packages.daily.access": "၁ ရက် အပြည့်အဝ အသုံးပြုခွင့်",
+  "packages.daily.access": "တစ်ရက် အခမဲ့ အသုံးပြုခွင့်",
   "packages.3day.name": "၃ ရက်စာ",
-  "packages.3day.access": "၃ ရက် အပြည့်အဝ အသုံးပြုခွင့်",
+  "packages.3day.access": "သုံးရက် အခမဲ့ အသုံးပြုခွင့်",
   "price": "{amount} ကျပ်",
 
   "apps.quizpro.desc": "ဆုလက်ဆောင်များ ပါဝင်သော ပျော်စရာ ဉာဏ်စမ်းပဟေဠိများ",
