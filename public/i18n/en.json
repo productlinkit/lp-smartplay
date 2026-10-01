@@ -23,6 +23,15 @@
   "links.privacy": "Privacy Policy",
   "links.help": "Help",
 
+  "offer.title1": "The best 3-in-1",
+  "offer.title2": "service package for everyone",
+  "offer.button": "Get the service now",
+  "offer.price": "{amount} Ks",
+  "offer.daily.line1": "Daily service only {price} (tax included)",
+  "offer.daily.line2": "(Includes 1 day free access)",
+  "offer.3day.line1": "3-day service only {price} (tax included)",
+  "offer.3day.line2": "(Includes 3 days free access)",
+
   "confirm.service": "Smart Play · {name}",
   "confirm.cancel": "To cancel, dial {cancelCode}.",
   "confirm.confirm": "Confirm",

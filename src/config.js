@@ -28,5 +28,5 @@ export default {
   confirmDelayMs: 900,
 
   // Query parameters used by the prototype itself; they are not forwarded to the app links.
-  internalParams: ["dev", "lang", "net", "sub", "result"],
+  internalParams: ["dev", "lang", "net", "sub", "result", "pkg"],
 };

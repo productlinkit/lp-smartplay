@@ -194,6 +194,54 @@ a { color: inherit; }
 }
 .sticky-bar.is-off { transform: translate(-50%, 110%); opacity: 0; pointer-events: none; }
 
+/* ── Offer ─────────────────────────────────────────────────────────── */
+/* One viewport: the art takes whatever height the card leaves, so the button is always on screen. */
+.screen.offer { min-height: 100vh; min-height: 100dvh; gap: 12px; padding-bottom: calc(16px + env(safe-area-inset-bottom, 0px)); }
+.offer-art { position: relative; flex: 1 1 auto; min-height: 200px; }
+.offer-phone {
+  position: absolute; left: 50%; top: 50%; translate: -50% -50%;
+  height: 92%; aspect-ratio: 9 / 16;
+  background: var(--navy); border-radius: 30px; padding: 7px;
+  box-shadow: 0 6px 0 var(--navy-deep), 0 18px 40px rgba(20, 28, 68, 0.35);
+  animation: bob 4s ease-in-out infinite;
+}
+.offer-phone-screen { position: relative; height: 100%; border-radius: 24px; overflow: hidden; background: var(--sky); }
+.offer-phone-screen > img { width: 100%; height: 100%; object-fit: cover; object-position: 62% 50%; }
+.offer-phone-screen::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(20, 28, 68, 0) 45%, rgba(20, 28, 68, 0.55)); }
+.offer-brand {
+  position: absolute; z-index: 1; left: 0; right: 0; bottom: 10%;
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+  font-family: var(--font-display); font-weight: 900; font-size: 1rem; color: var(--white); white-space: nowrap;
+}
+.offer-brand img { width: clamp(44px, 14vw, 56px); height: auto; border-radius: 14px; background: var(--white); padding: 4px; box-shadow: 0 4px 12px rgba(20, 28, 68, 0.3); }
+.offer-bubble {
+  position: absolute; z-index: 2; display: grid; place-items: center;
+  width: clamp(64px, 20vw, 82px); aspect-ratio: 1; border-radius: 50%;
+  background: var(--white); padding: 10px;
+  box-shadow: 0 6px 0 rgba(20, 28, 68, 0.18), 0 12px 24px rgba(20, 28, 68, 0.28);
+  animation: bob 3.2s ease-in-out infinite; animation-delay: calc(var(--i) * -1.05s);
+}
+.offer-bubble img { width: 100%; height: 100%; object-fit: contain; border-radius: 14px; }
+.offer-bubble:nth-of-type(1) { left: 2%; top: 8%; }
+.offer-bubble:nth-of-type(2) { right: 2%; top: 34%; }
+.offer-bubble:nth-of-type(3) { left: 6%; bottom: 8%; }
+.offer-card {
+  display: grid; gap: 14px; text-align: center;
+  background: var(--navy); color: var(--white); border-radius: var(--radius);
+  padding: 20px clamp(14px, 4.5vw, 20px) 18px;
+  box-shadow: 0 10px 30px rgba(20, 28, 68, 0.3);
+}
+.offer-card h1 { font-size: clamp(1.375rem, 6.4vw, 1.625rem); font-weight: 900; line-height: 1.25; letter-spacing: -0.01em; }
+:lang(my) .offer-card h1 { font-size: clamp(1.1875rem, 5.4vw, 1.375rem); font-weight: 700; line-height: 1.75; letter-spacing: 0; }
+.offer-card h1 span { display: block; }
+.offer-card .hl { color: var(--yellow); }
+.btn-yellow { background: var(--yellow); color: var(--navy); box-shadow: 0 5px 0 #C9A52E; }
+.btn-yellow:active { transform: translateY(3px); box-shadow: 0 2px 0 #C9A52E; }
+.btn-yellow:focus-visible { outline-color: var(--yellow); }
+.offer-terms { font-size: 0.8125rem; line-height: 1.55; color: rgba(255, 255, 255, 0.9); }
+:lang(my) .offer-terms { line-height: 1.8; }
+.offer-price { color: var(--yellow); font-weight: 700; white-space: nowrap; }
+
 /* ── App lists ─────────────────────────────────────────────────────── */
 .apps { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
 .app-row { display: flex; align-items: center; gap: 14px; padding: 10px; border-radius: 18px; background: var(--yellow-soft); }

@@ -5,7 +5,7 @@ import C from "./config.js";
   const devRoot = document.getElementById("dev");
   const MY_DIGITS = "၀၁၂၃၄၅၆၇၈၉";
   const params = new URLSearchParams(location.search);
-  const SCREENS = ["landing", "confirm", "success", "portal", "games", "blocked", "error"];
+  const SCREENS = ["landing", "offer", "confirm", "success", "portal", "games", "blocked", "error"];
 
   const session = {
     get(k) { try { return JSON.parse(sessionStorage.getItem(k)); } catch { return null; } },
@@ -45,8 +45,9 @@ import C from "./config.js";
     for (const [k, v] of Object.entries(vars)) s = s.split(`{${k}}`).join(v);
     return s;
   }
-  // Escaped copy with the cancel code highlighted.
-  const withCode = key => esc(t(key, { cancelCode: "\u0000" })).replace("\u0000", `<span class="code">${esc(C.cancelCode)}</span>`);
+  // Escaped copy with one placeholder wrapped in a highlight span.
+  const withMark = (key, name, text, cls) => esc(t(key, { [name]: "\u0000" })).replace("\u0000", `<span class="${cls}">${esc(text)}</span>`);
+  const withCode = key => withMark(key, "cancelCode", C.cancelCode, "code");
   const pkgById = id => C.packages.find(p => p.id === id) || C.packages[0];
   const price = p => t("price", { amount: num(p.price) });
 
@@ -140,6 +141,30 @@ import C from "./config.js";
       </div>
       <div class="sticky-bar is-off" id="sticky-bar">
         <button type="button" class="btn btn-primary btn-lg" data-action="subscribe" tabindex="-1">${esc(t("landing.subscribe"))}</button>
+      </div>`;
+  }
+
+  // Offer: one-viewport pitch between package choice and the consent page; the price lines follow the chosen package.
+  function offer() {
+    const p = pkgById(state.pkg);
+    const amount = t("offer.price", { amount: num(p.price) });
+    return `
+      <div class="screen offer">
+        ${topbar()}
+        <div class="offer-art" role="img" aria-label="QuizPro, SpeakEasy, PlayVerse">
+          <div class="offer-phone">
+            <div class="offer-phone-screen">
+              <img src="assets/hero.webp" alt="" width="800" height="495" fetchpriority="high">
+              <span class="offer-brand"><img src="assets/smartplay.webp" alt="" width="56" height="56">${esc(t("brand"))}</span>
+            </div>
+          </div>
+          ${C.apps.map((a, i) => `<span class="offer-bubble" style="--i:${i}"><img src="${a.icon}" alt="" width="64" height="64"></span>`).join("")}
+        </div>
+        <section class="offer-card">
+          <h1 tabindex="-1"><span>${esc(t("offer.title1"))}</span> <span class="hl">${esc(t("offer.title2"))}</span></h1>
+          <button type="button" class="btn btn-yellow btn-lg" data-action="offer-continue">${esc(t("offer.button"))}</button>
+          <p class="offer-terms">${withMark(`offer.${p.id}.line1`, "price", amount, "offer-price")}<br>${esc(t(`offer.${p.id}.line2`))}</p>
+        </section>
       </div>`;
   }
 
@@ -283,7 +308,7 @@ import C from "./config.js";
     `<button type="button" class="btn btn-primary btn-lg" data-action="retry-error">${esc(t("error.retry"))}</button>
      <button type="button" class="btn btn-ghost" data-action="back-packages">${esc(t("error.back"))}</button>`);
 
-  const VIEWS = { landing, confirm, success, portal, games, blocked, error };
+  const VIEWS = { landing, offer, confirm, success, portal, games, blocked, error };
 
   // ── Rendering & navigation ──────────────────────────────────────────
   let observer = null;
@@ -315,7 +340,15 @@ import C from "./config.js";
   }
 
   // The URL keeps its query string (and #dev) on every step; the screen lives in history state.
-  const url = () => location.pathname + location.search + (devOn ? "#dev" : "");
+  // The offer screen has its own path (/offer?pkg=daily) so it can be linked and Back lands on the packages.
+  const BASE = import.meta.env.BASE_URL;
+  const OFFER_PATH = BASE + "offer";
+  function url(screen) {
+    const q = new URLSearchParams(location.search);
+    if (screen === "offer") q.set("pkg", state.pkg); else q.delete("pkg");
+    const qs = q.toString();
+    return (screen === "offer" ? OFFER_PATH : BASE) + (qs ? "?" + qs : "") + (devOn ? "#dev" : "");
+  }
   function go(screen, { replace = false, push = true } = {}) {
     if (state.screen === "landing" && screen !== "landing" && screen !== "success") state.landingScroll = scrollY;
     const from = state.screen;
@@ -323,10 +356,10 @@ import C from "./config.js";
     state.busy = false;
     state.sheet = false;
     if (push) {
-      try { history[replace ? "replaceState" : "pushState"]({ screen }, "", url()); } catch { /* sandboxed history */ }
+      try { history[replace ? "replaceState" : "pushState"]({ screen, pkg: state.pkg }, "", url(screen)); } catch { /* sandboxed history */ }
     }
     render({ focus: true });
-    const restore = screen === "landing" && (from === "confirm" || from === "error");
+    const restore = screen === "landing" && (from === "offer" || from === "confirm" || from === "error");
     if (screen !== "success") scrollTo(0, restore ? state.landingScroll : 0);
   }
 
@@ -346,7 +379,8 @@ import C from "./config.js";
   // ── Actions ─────────────────────────────────────────────────────────
   const actions = {
     lang(el) { state.lang = el.dataset.lang; render(); },
-    subscribe() {
+    subscribe() { go("offer"); },
+    "offer-continue"() {
       if (sim.network === "blocked") { state.resume = "confirm"; go("blocked"); return; }
       go("confirm");
     },
@@ -434,6 +468,7 @@ import C from "./config.js";
   addEventListener("popstate", ev => {
     const s = ev.state?.screen;
     if (s === "games" && !state.games) { go("portal", { push: false }); return; }
+    if (s === "offer" && ev.state.pkg) state.pkg = pkgById(ev.state.pkg).id;
     if (SCREENS.includes(s)) go(s, { push: false });
   });
 
@@ -461,9 +496,16 @@ import C from "./config.js";
   Promise.all(["en", "my"].map(l => fetch(`i18n/${l}.json`).then(r => r.json())))
     .then(([en, my]) => {
       dict = { en, my };
-      const first = entry();
+      let first = entry();
+      // Opened straight on /offer: keep the package from the link and put the landing page under it for Back.
+      const atOffer = location.pathname.replace(/\/+$/, "") === OFFER_PATH;
+      if (atOffer && first === "landing") {
+        if (params.get("pkg")) state.pkg = pkgById(params.get("pkg")).id;
+        try { history.replaceState({ screen: "landing", pkg: state.pkg }, "", url("landing")); } catch { /* sandboxed history */ }
+        first = "offer";
+      }
       state.screen = first;
-      try { history.replaceState({ screen: first }, "", url()); } catch { /* sandboxed history */ }
+      try { history[first === "offer" ? "pushState" : "replaceState"]({ screen: first, pkg: state.pkg }, "", url(first)); } catch { /* sandboxed history */ }
       render();
     })
     .catch(() => {

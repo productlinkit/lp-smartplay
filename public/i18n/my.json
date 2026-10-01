@@ -23,6 +23,15 @@
   "links.privacy": "ကိုယ်ရေးအချက်အလက် မူဝါဒ",
   "links.help": "အကူအညီ",
 
+  "offer.title1": "လူတိုင်းအတွက် အကောင်းဆုံး",
+  "offer.title2": "3-in-1 ဝန်ဆောင်မှုပက်ကေ့ချ်",
+  "offer.button": "အခုပဲ ဝန်ဆောင်မှု ရယူလိုက်ပါ",
+  "offer.price": "{amount} ကျပ်",
+  "offer.daily.line1": "နေ့စဉ် ဝန်ဆောင်မှု {price}သာ (အခွန်အပါဝင်)",
+  "offer.daily.line2": "(တစ်ရက် အခမဲ့ အသုံးပြုခွင့် ပါဝင်သည်)",
+  "offer.3day.line1": "၃ ရက်စာ ဝန်ဆောင်မှု {price}သာ (အခွန်အပါဝင်)",
+  "offer.3day.line2": "(သုံးရက် အခမဲ့ အသုံးပြုခွင့် ပါဝင်သည်)",
+
   "confirm.service": "Smart Play · {name}",
   "confirm.cancel": "ဝန်ဆောင်မှု ပယ်ဖျက်ရန် {cancelCode} ကို ခေါ်ဆိုပါ။",
   "confirm.confirm": "အတည်ပြုရန်",
