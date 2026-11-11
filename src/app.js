@@ -126,7 +126,7 @@ import C from "./config.js";
           <fieldset class="pkgs" aria-labelledby="pkg-label">${pkgs}</fieldset>
           <div class="cta">
             <button type="button" class="btn btn-primary btn-lg" id="cta-inline" data-action="subscribe">${esc(t("landing.subscribe"))}</button>
-            <p class="fine">${withCode("landing.finePrint")} <a href="${esc(linkHref("terms"))}" data-link="terms">${esc(t("links.terms"))}</a></p>
+            <p class="fine">${withCode("landing.finePrint")} <a href="${esc(linkHref("terms"))}" data-link="terms">${esc(t("links.terms"))}</a> · <a href="${esc(url("unsubscribe"))}" data-action="unsubscribe">${esc(t("unsub.link"))}</a></p>
           </div>
         </section>
 
@@ -238,7 +238,10 @@ import C from "./config.js";
           <span class="chip">${esc(t(`portal.status.${plan.id}`))}</span>
         </section>
         <ul class="apps">${cards}</ul>
-        <div class="center-link"><button type="button" data-action="how-cancel">${esc(t("portal.howToCancel"))}</button></div>
+        <div class="center-link">
+          <button type="button" data-action="how-cancel">${esc(t("portal.howToCancel"))}</button>
+          <button type="button" data-action="unsubscribe">${esc(t("unsub.button"))}</button>
+        </div>
       </div>
       ${state.sheet ? `
       <div class="scrim sheet-scrim" data-action="close-sheet">

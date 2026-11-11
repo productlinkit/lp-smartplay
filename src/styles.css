@@ -265,7 +265,7 @@ a { color: inherit; }
 .app-card-top { display: flex; align-items: center; gap: 16px; }
 .app-card .app-icon { width: 72px; height: 72px; border-radius: 20px; background: var(--yellow-soft); box-shadow: none; padding: 8px; }
 .app-card .app-name { font-size: 1.25rem; }
-.center-link { display: flex; justify-content: center; }
+.center-link { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
 .center-link button { background: rgba(255, 255, 255, 0.92); border: 0; border-radius: 999px; min-height: 48px; padding: 0 20px; font-weight: 600; color: var(--navy); cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
 
 /* ── PlayVerse catalogue ───────────────────────────────────────────── */
