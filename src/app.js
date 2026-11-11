@@ -5,7 +5,7 @@ import C from "./config.js";
   const devRoot = document.getElementById("dev");
   const MY_DIGITS = "၀၁၂၃၄၅၆၇၈၉";
   const params = new URLSearchParams(location.search);
-  const SCREENS = ["landing", "offer", "confirm", "success", "portal", "games", "blocked", "error"];
+  const SCREENS = ["landing", "offer", "confirm", "success", "portal", "games", "blocked", "error", "unsubscribe"];
 
   const session = {
     get(k) { try { return JSON.parse(sessionStorage.getItem(k)); } catch { return null; } },
@@ -34,6 +34,8 @@ import C from "./config.js";
     gameQuery: "",
     gameGenre: "all",
     landingScroll: 0,
+    msisdn: params.get("msisdn") || "",
+    unsub: null,            // null (form) | "done" | "invalid" | "failed"
   };
   let dict = { en: {}, my: {} };
 
@@ -136,7 +138,8 @@ import C from "./config.js";
         <footer class="footer">
           <a href="${esc(linkHref("terms"))}" data-link="terms">${esc(t("links.terms"))}</a><span aria-hidden="true">·</span>
           <a href="${esc(linkHref("privacy"))}" data-link="privacy">${esc(t("links.privacy"))}</a><span aria-hidden="true">·</span>
-          <a href="${esc(linkHref("help"))}" data-link="help">${esc(t("links.help"))}</a>
+          <a href="${esc(linkHref("help"))}" data-link="help">${esc(t("links.help"))}</a><span aria-hidden="true">·</span>
+          <a href="${esc(url("unsubscribe"))}" data-action="unsubscribe">${esc(t("unsub.link"))}</a>
         </footer>
       </div>
       <div class="sticky-bar is-off" id="sticky-bar">
@@ -246,6 +249,7 @@ import C from "./config.js";
           </div>
           <p>${withCode("confirm.cancel")}</p>
           <div class="dial" aria-hidden="true">${esc(C.cancelCode)}</div>
+          <button type="button" class="btn btn-ghost" data-action="unsubscribe">${esc(t("unsub.button"))}</button>
         </div>
       </div>` : ""}`;
   }
@@ -308,7 +312,41 @@ import C from "./config.js";
     `<button type="button" class="btn btn-primary btn-lg" data-action="retry-error">${esc(t("error.retry"))}</button>
      <button type="button" class="btn btn-ghost" data-action="back-packages">${esc(t("error.back"))}</button>`);
 
-  const VIEWS = { landing, offer, confirm, success, portal, games, blocked, error };
+  // Unsubscribe: the user types (or arrives with ?msisdn=) their ATOM number and the page calls C.unsubscribeUrl.
+  function unsubscribe() {
+    if (state.unsub === "done") return status(ICON.check, "unsub.doneTitle", "unsub.doneText",
+      `<button type="button" class="btn btn-primary btn-lg" data-action="back-packages">${esc(t("error.back"))}</button>`);
+    const err = state.unsub === "invalid" || state.unsub === "failed" ? t(`unsub.${state.unsub}`) : "";
+    return `
+      <div class="screen">
+        ${topbar()}
+        <section class="panel status" id="status-panel">
+          <div class="status-icon" style="color:var(--navy)">${ICON.info}</div>
+          <h1 tabindex="-1">${esc(t("unsub.title"))}</h1>
+          <p>${esc(t("unsub.text"))}</p>
+          <form class="unsub-form" id="unsub-form" novalidate>
+            <label for="unsub-msisdn">${esc(t("unsub.label"))}</label>
+            <input type="tel" id="unsub-msisdn" inputmode="tel" autocomplete="tel" placeholder="09xxxxxxxxx" value="${esc(state.msisdn)}"
+              ${err ? 'aria-invalid="true" aria-describedby="unsub-err"' : ""}>
+            ${err ? `<p class="unsub-err" id="unsub-err" role="alert">${esc(err)}</p>` : ""}
+            <div class="actions">
+              <button type="submit" class="btn btn-primary btn-lg"${state.busy ? ' disabled aria-busy="true"' : ""}>${state.busy ? spinner : ""}${esc(t("unsub.button"))}</button>
+              <button type="button" class="btn btn-ghost" data-action="back-packages"${state.busy ? " disabled" : ""}>${esc(t("unsub.cancel"))}</button>
+            </div>
+          </form>
+        </section>
+      </div>`;
+  }
+
+  // 09…, +959…, 959… or 9… (Myanmar digits allowed) → 959…; null when it is not an ATOM-style mobile number.
+  function normalizeMsisdn(raw) {
+    let d = String(raw).replace(/[၀-၉]/g, c => MY_DIGITS.indexOf(c)).replace(/\D/g, "");
+    if (d.startsWith("0")) d = "95" + d.slice(1);
+    else if (d.startsWith("9") && !d.startsWith("95")) d = "95" + d;
+    return /^959\d{7,9}$/.test(d) ? d : null;
+  }
+
+  const VIEWS = { landing, offer, confirm, success, portal, games, blocked, error, unsubscribe };
 
   // ── Rendering & navigation ──────────────────────────────────────────
   let observer = null;
@@ -343,11 +381,13 @@ import C from "./config.js";
   // The offer screen has its own path (/offer?pkg=daily) so it can be linked and Back lands on the packages.
   const BASE = import.meta.env.BASE_URL;
   const OFFER_PATH = BASE + "offer";
+  const UNSUB_PATH = BASE + "unsubscribe";
   function url(screen) {
     const q = new URLSearchParams(location.search);
     if (screen === "offer") q.set("pkg", state.pkg); else q.delete("pkg");
     const qs = q.toString();
-    return (screen === "offer" ? OFFER_PATH : BASE) + (qs ? "?" + qs : "") + (devOn ? "#dev" : "");
+    const path = screen === "offer" ? OFFER_PATH : screen === "unsubscribe" ? UNSUB_PATH : BASE;
+    return path + (qs ? "?" + qs : "") + (devOn ? "#dev" : "");
   }
   function go(screen, { replace = false, push = true } = {}) {
     if (state.screen === "landing" && screen !== "landing" && screen !== "success") state.landingScroll = scrollY;
@@ -359,7 +399,7 @@ import C from "./config.js";
       try { history[replace ? "replaceState" : "pushState"]({ screen, pkg: state.pkg }, "", url(screen)); } catch { /* sandboxed history */ }
     }
     render({ focus: true });
-    const restore = screen === "landing" && (from === "offer" || from === "confirm" || from === "error");
+    const restore = screen === "landing" && (from === "offer" || from === "confirm" || from === "error" || from === "unsubscribe");
     if (screen !== "success") scrollTo(0, restore ? state.landingScroll : 0);
   }
 
@@ -428,6 +468,7 @@ import C from "./config.js";
       document.querySelectorAll(".genre").forEach(b => b.setAttribute("aria-pressed", b === el));
       document.getElementById("game-grid").innerHTML = gameTiles();
     },
+    unsubscribe(el, ev) { ev.preventDefault(); state.unsub = null; go("unsubscribe"); },
     "open-missing"(el) { toast(`${el.dataset.app}: link not set yet (src/config.js → apps.url)`); },
     // demo panel
     "dev-toggle"() { state.devOpen = !state.devOpen; renderDev(); },
@@ -451,6 +492,31 @@ import C from "./config.js";
     const el = ev.target.closest("[data-action]");
     if (!el || el.disabled) return;
     actions[el.dataset.action]?.(el, ev);
+  });
+  document.addEventListener("submit", ev => {
+    if (ev.target.id !== "unsub-form") return;
+    ev.preventDefault();
+    if (state.busy) return;
+    state.msisdn = document.getElementById("unsub-msisdn").value;
+    const msisdn = normalizeMsisdn(state.msisdn);
+    if (!msisdn) { state.unsub = "invalid"; render(); document.getElementById("unsub-msisdn")?.focus(); return; }
+    state.busy = true; state.unsub = null; render();
+    fetch(`${C.unsubscribeUrl}?msisdn=${encodeURIComponent(msisdn)}`, { cache: "no-store" })
+      .then(r => r.json().catch(() => ({})).then(body => r.ok && (body.code ?? 200) === 200))
+      .catch(() => false)
+      .then(ok => {
+        if (state.screen !== "unsubscribe") return;
+        state.busy = false;
+        if (ok) {
+          state.unsub = "done";
+          sim.user = "new"; saveSim();
+          state.plan = null; session.set("sp-plan", null);
+          render({ focus: true });
+        } else {
+          state.unsub = "failed"; render();
+          document.getElementById("unsub-msisdn")?.focus();
+        }
+      });
   });
   document.addEventListener("input", ev => {
     if (ev.target.id !== "game-search") return;
@@ -504,8 +570,13 @@ import C from "./config.js";
         try { history.replaceState({ screen: "landing", pkg: state.pkg }, "", url("landing")); } catch { /* sandboxed history */ }
         first = "offer";
       }
+      // Opened straight on /unsubscribe (e.g. from an SMS link): same idea, with the landing page under it.
+      if (location.pathname.replace(/\/+$/, "") === UNSUB_PATH) {
+        try { history.replaceState({ screen: "landing", pkg: state.pkg }, "", url("landing")); } catch { /* sandboxed history */ }
+        first = "unsubscribe";
+      }
       state.screen = first;
-      try { history[first === "offer" ? "pushState" : "replaceState"]({ screen: first, pkg: state.pkg }, "", url(first)); } catch { /* sandboxed history */ }
+      try { history[first === "offer" || first === "unsubscribe" ? "pushState" : "replaceState"]({ screen: first, pkg: state.pkg }, "", url(first)); } catch { /* sandboxed history */ }
       render();
     })
     .catch(() => {

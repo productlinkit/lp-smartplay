@@ -427,3 +427,15 @@ body.is-op, body.is-op .backdrop { background: var(--op-bg); }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 1ms !important; animation-iteration-count: 1 !important; transition-duration: 1ms !important; }
 }
+
+/* ── Unsubscribe ──────────────────────────────────────────────────── */
+.unsub-form { display: grid; gap: 8px; width: 100%; }
+.unsub-form label { font-weight: 600; color: var(--navy); }
+.unsub-form input {
+  min-height: 52px; padding: 0 16px; border: 2px solid var(--line); border-radius: 14px;
+  background: var(--yellow-soft); font: inherit; font-size: 1.125rem; color: var(--navy); letter-spacing: 0.02em;
+}
+.unsub-form input:focus { outline: 3px solid var(--navy); outline-offset: 2px; }
+.unsub-form input[aria-invalid="true"] { border-color: #C0392B; }
+.unsub-form .unsub-err { color: #B0281A; font-size: 0.9375rem; }
+.sheet .btn-ghost { width: 100%; margin-top: 12px; }

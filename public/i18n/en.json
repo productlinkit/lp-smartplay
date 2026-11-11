@@ -56,6 +56,17 @@
   "error.retry": "Try Again",
   "error.back": "Back to packages",
 
+  "unsub.link": "Unsubscribe",
+  "unsub.title": "Unsubscribe from Smart Play",
+  "unsub.text": "Enter your ATOM number to stop your Smart Play subscription. You will not be charged again.",
+  "unsub.label": "ATOM phone number",
+  "unsub.button": "Unsubscribe",
+  "unsub.cancel": "Keep my subscription",
+  "unsub.invalid": "Please enter a valid ATOM number, for example 09xxxxxxxxx.",
+  "unsub.failed": "We couldn't unsubscribe this number. Please check the number and try again.",
+  "unsub.doneTitle": "You have unsubscribed",
+  "unsub.doneText": "Your Smart Play subscription has been stopped. You'll get a confirmation SMS from ATOM.",
+
   "games.count": "{n} games · tap a game to play",
   "games.search": "Search games",
   "games.all": "All",
