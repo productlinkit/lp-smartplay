@@ -22,7 +22,7 @@ export default {
   links: { terms: "", privacy: "", help: "" },
 
   // Unsubscribe API (GET, JSON). The page appends ?msisdn=959…; a "msisdn" in the page's own URL prefills the number.
-  unsubscribeUrl: "https://smart-play.mobi/api/portal/unsubscribe",
+  unsubscribeUrl: "https://staging.smart-play.mobi/api/portal/unsubscribe",
 
   // Where the success popup's button sends the user. Leave empty to open the in-app portal instead.
   successUrl: "https://growthplus-weld.vercel.app",
