@@ -35,7 +35,7 @@ import C from "./config.js";
     gameGenre: "all",
     landingScroll: 0,
     msisdn: params.get("msisdn") || "",
-    unsub: null,            // null (form) | "invalid"
+    unsub: null,            // null (form) | "invalid" | "failed"
   };
   let dict = { en: {}, my: {} };
 
@@ -315,9 +315,9 @@ import C from "./config.js";
     `<button type="button" class="btn btn-primary btn-lg" data-action="retry-error">${esc(t("error.retry"))}</button>
      <button type="button" class="btn btn-ghost" data-action="back-packages">${esc(t("error.back"))}</button>`);
 
-  // Unsubscribe: the user types (or arrives with ?msisdn=) their ATOM number, then is sent to C.unsubscribeUrl.
+  // Unsubscribe: the user types (or arrives with ?msisdn=) their ATOM number and the page calls C.unsubscribeUrl.
   function unsubscribe() {
-    const err = state.unsub === "invalid" ? t("unsub.invalid") : "";
+    const err = state.unsub ? t(`unsub.${state.unsub}`) : "";
     return `
       <div class="screen">
         ${topbar()}
@@ -501,11 +501,19 @@ import C from "./config.js";
     state.msisdn = document.getElementById("unsub-msisdn").value;
     const msisdn = normalizeMsisdn(state.msisdn);
     if (!msisdn) { state.unsub = "invalid"; render(); document.getElementById("unsub-msisdn")?.focus(); return; }
-    // Hand the user over to the Smart Play portal's own unsubscribe link; the portal shows the result.
+    // Call the Smart Play portal's unsubscribe link, then bring the user back to the packages so they can subscribe again.
     state.busy = true; state.unsub = null; render();
-    sim.user = "new"; saveSim();
-    state.plan = null; session.set("sp-plan", null);
-    location.href = `${C.unsubscribeUrl}?msisdn=${encodeURIComponent(msisdn)}`;
+    fetch(`${C.unsubscribeUrl}?msisdn=${encodeURIComponent(msisdn)}`, { cache: "no-store" })
+      .then(r => r.json().catch(() => ({})).then(body => r.ok && (body.code ?? 200) === 200))
+      .catch(() => false)
+      .then(ok => {
+        if (state.screen !== "unsubscribe") return;
+        if (!ok) { state.busy = false; state.unsub = "failed"; render(); document.getElementById("unsub-msisdn")?.focus(); return; }
+        sim.user = "new"; saveSim();
+        state.plan = null; session.set("sp-plan", null);
+        go("landing", { replace: true });
+        toast(t("unsub.done"));
+      });
   });
   document.addEventListener("input", ev => {
     if (ev.target.id !== "game-search") return;

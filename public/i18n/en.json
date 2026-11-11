@@ -63,6 +63,8 @@
   "unsub.button": "Unsubscribe",
   "unsub.cancel": "Keep my subscription",
   "unsub.invalid": "Please enter a valid ATOM number, for example 09xxxxxxxxx.",
+  "unsub.failed": "We couldn't unsubscribe this number. Please check the number and try again.",
+  "unsub.done": "You have unsubscribed from Smart Play.",
 
   "games.count": "{n} games · tap a game to play",
   "games.search": "Search games",
