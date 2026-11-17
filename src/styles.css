@@ -331,19 +331,35 @@ button.game { width: 100%; border: 0; padding: 0; text-align: left; color: var(-
 .game-row { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 @media (prefers-reduced-motion: reduce) { .game-cover-fg { animation: none; } }
 
-/* ── Terms & Conditions ────────────────────────────────────────────── */
-.terms { display: grid; gap: 14px; }
-.terms-head { display: flex; align-items: center; gap: 10px; min-width: 0; }
-.terms-head h1 { font-size: clamp(1.375rem, 6.4vw, 1.625rem); font-weight: 900; line-height: 1.25; min-width: 0; }
-:lang(my) .terms-head h1 { font-weight: 700; line-height: 1.7; }
-.terms-date { font-size: 0.8125rem; color: var(--ink-muted); }
-.terms-intro { padding: 12px 14px; border-radius: 14px; background: var(--yellow-soft); line-height: 1.6; }
-:lang(my) .terms-intro { line-height: 1.9; }
-.terms section { display: grid; gap: 4px; padding-top: 14px; border-top: 1px solid var(--line); }
-.terms h2 { font-size: 1.0625rem; font-weight: 900; line-height: 1.35; }
-:lang(my) .terms h2 { font-weight: 700; line-height: 1.7; }
-.terms section p { color: var(--ink-muted); line-height: 1.65; overflow-wrap: anywhere; }
-:lang(my) .terms section p { line-height: 1.9; }
+/* ── Info pages (Terms / Privacy / Help) ──────────────────────────── */
+.doc { display: grid; gap: 14px; }
+.doc-head { display: flex; align-items: center; gap: 10px; min-width: 0; }
+.doc-head h1 { font-size: clamp(1.375rem, 6.4vw, 1.625rem); font-weight: 900; line-height: 1.25; min-width: 0; }
+:lang(my) .doc-head h1 { font-weight: 700; line-height: 1.7; }
+.doc-date { font-size: 0.8125rem; color: var(--ink-muted); }
+.doc-intro { padding: 12px 14px; border-radius: 14px; background: var(--yellow-soft); line-height: 1.6; }
+:lang(my) .doc-intro { line-height: 1.9; }
+.doc section { display: grid; gap: 4px; padding-top: 14px; border-top: 1px solid var(--line); }
+.doc h2 { font-size: 1.0625rem; font-weight: 900; line-height: 1.35; }
+:lang(my) .doc h2 { font-weight: 700; line-height: 1.7; }
+.doc section p, .faq-body p { color: var(--ink-muted); line-height: 1.65; overflow-wrap: anywhere; }
+:lang(my) .doc section p, :lang(my) .faq-body p { line-height: 1.9; }
+
+.faq { border-radius: 16px; background: var(--yellow-soft); }
+.faq summary {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  min-height: 52px; padding: 10px 14px; cursor: pointer; list-style: none;
+  font-weight: 700; line-height: 1.4; border-radius: 16px;
+}
+:lang(my) .faq summary { line-height: 1.8; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after {
+  content: ""; flex-shrink: 0; width: 10px; height: 10px; margin-right: 4px;
+  border-right: 2.5px solid var(--navy); border-bottom: 2.5px solid var(--navy);
+  transform: translateY(-3px) rotate(45deg); transition: transform 180ms;
+}
+.faq[open] summary::after { transform: translateY(2px) rotate(-135deg); }
+.faq-body { display: grid; gap: 6px; padding: 0 14px 14px; }
 
 /* ── Status screens (blocked / error) ─────────────────────────────── */
 .status { display: grid; gap: 14px; justify-items: start; margin-top: 8vh; }

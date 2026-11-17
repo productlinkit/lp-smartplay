@@ -5,7 +5,7 @@ import C from "./config.js";
   const devRoot = document.getElementById("dev");
   const MY_DIGITS = "၀၁၂၃၄၅၆၇၈၉";
   const params = new URLSearchParams(location.search);
-  const SCREENS = ["landing", "offer", "confirm", "success", "portal", "games", "game", "blocked", "error", "unsubscribe", "terms"];
+  const SCREENS = ["landing", "offer", "confirm", "success", "portal", "games", "game", "blocked", "error", "unsubscribe", "terms", "privacy", "help"];
 
   const session = {
     get(k) { try { return JSON.parse(sessionStorage.getItem(k)); } catch { return null; } },
@@ -38,7 +38,7 @@ import C from "./config.js";
     landingScroll: 0,
     msisdn: params.get("msisdn") || "",
     unsub: null,            // null (form) | "invalid" | "failed"
-    termsFrom: null,        // screen the Terms page was opened from; its Back button returns there
+    docFrom: null,          // screen a Terms / Privacy / Help page was opened from; its Back button returns there
   };
   let dict = { en: {}, my: {} };
 
@@ -63,8 +63,8 @@ import C from "./config.js";
     const s = q.toString();
     return s ? url + (url.includes("?") ? "&" : "?") + s : url;
   }
-  // An empty C.links.terms uses the built-in Terms page; other empty links stay inert.
-  const linkHref = key => C.links[key] ? forwardQuery(C.links[key]) : key === "terms" ? url("terms") : "#";
+  // An empty C.links.<key> uses the built-in page (/terms, /privacy, /help); a URL there sends the link elsewhere.
+  const linkHref = key => C.links[key] ? forwardQuery(C.links[key]) : DOCS[key] ? url(key) : "#";
 
   // ── Icons ───────────────────────────────────────────────────────────
   const ICON = {
@@ -407,39 +407,56 @@ import C from "./config.js";
     return /^959\d{7,9}$/.test(d) ? d : null;
   }
 
-  // Terms & Conditions: section copy lives in i18n under "terms.<id>.title" / "terms.<id>.body".
-  const TERMS_SECTIONS = ["about", "packages", "free", "renew", "cancel", "data", "eligibility", "content", "changes", "contact"];
-  function termsDate() {
-    const [y, m, d] = C.termsUpdated.split("-").map(Number);
+  // Info pages (Terms, Privacy, Help). Copy lives in i18n as "<page>.title", "<page>.intro" and "<page>.<id>.title|body".
+  // "faq" pages show each section as a tap-to-open question; "unsub" sections get a link to the Unsubscribe page.
+  const DOCS = {
+    terms: { sections: ["about", "packages", "free", "renew", "cancel", "data", "eligibility", "content", "changes", "contact"], unsub: ["cancel"] },
+    privacy: { sections: ["collect", "use", "share", "keep", "security", "browser", "choices", "children", "changes", "contact"], unsub: ["choices"] },
+    help: { sections: ["subscribe", "price", "data", "failed", "apps", "game", "cancel", "contact"], unsub: ["cancel"], faq: true },
+  };
+  function docDate(page) {
+    const iso = C.docsUpdated[page];
+    if (!iso) return "";
+    const [y, m, d] = iso.split("-").map(Number);
     return state.lang === "en"
       ? new Date(y, m - 1, d).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" })
       : num(`${d}.${m}.${y}`);
   }
-  function terms() {
+  function doc(page) {
+    const { sections, unsub, faq } = DOCS[page];
     const vars = { daily: price(pkgById("daily")), threeDay: price(pkgById("3day")), cancelCode: C.cancelCode };
-    const sections = TERMS_SECTIONS.map(id => `
-          <section aria-labelledby="terms-${id}">
-            <h2 id="terms-${id}">${esc(t(`terms.${id}.title`))}</h2>
-            <p>${esc(t(`terms.${id}.body`, vars))}</p>
-            ${id === "cancel" ? `<p><a class="text-link" href="${esc(url("unsubscribe"))}" data-action="unsubscribe">${esc(t("unsub.title"))}</a></p>` : ""}
+    const body = id => `
+            <p>${esc(t(`${page}.${id}.body`, vars))}</p>
+            ${unsub.includes(id) ? `<p><a class="text-link" href="${esc(url("unsubscribe"))}" data-action="unsubscribe">${esc(t("unsub.title"))}</a></p>` : ""}`;
+    const list = sections.map(id => faq ? `
+          <details class="faq">
+            <summary><span>${esc(t(`${page}.${id}.title`))}</span></summary>
+            <div class="faq-body">${body(id)}</div>
+          </details>` : `
+          <section aria-labelledby="${page}-${id}">
+            <h2 id="${page}-${id}">${esc(t(`${page}.${id}.title`))}</h2>${body(id)}
           </section>`).join("");
+    const date = docDate(page);
     return `
       <div class="screen">
         ${topbar()}
-        <article class="panel terms" aria-labelledby="terms-title">
-          <div class="terms-head">
-            <button type="button" class="icon-btn" data-action="terms-back" aria-label="${esc(t("a11y.back"))}">${ICON.back}</button>
-            <h1 id="terms-title" tabindex="-1">${esc(t("terms.title"))}</h1>
+        <article class="panel doc" aria-labelledby="doc-title">
+          <div class="doc-head">
+            <button type="button" class="icon-btn" data-action="doc-back" aria-label="${esc(t("a11y.back"))}">${ICON.back}</button>
+            <h1 id="doc-title" tabindex="-1">${esc(t(`${page}.title`))}</h1>
           </div>
-          <p class="terms-date">${esc(t("terms.updated", { date: termsDate() }))}</p>
-          <p class="terms-intro">${esc(t("terms.intro"))}</p>
-          ${sections}
-          <button type="button" class="btn btn-ghost" data-action="terms-back">${esc(t("terms.back"))}</button>
+          ${date ? `<p class="doc-date">${esc(t("doc.updated", { date }))}</p>` : ""}
+          <p class="doc-intro">${esc(t(`${page}.intro`))}</p>
+          ${list}
+          <button type="button" class="btn btn-ghost" data-action="doc-back">${esc(t("doc.back"))}</button>
         </article>
       </div>`;
   }
 
-  const VIEWS = { landing, offer, confirm, success, portal, games, game, blocked, error, unsubscribe, terms };
+  const VIEWS = {
+    landing, offer, confirm, success, portal, games, game, blocked, error, unsubscribe,
+    terms: () => doc("terms"), privacy: () => doc("privacy"), help: () => doc("help"),
+  };
 
   // ── Rendering & navigation ──────────────────────────────────────────
   let observer = null;
@@ -475,12 +492,11 @@ import C from "./config.js";
   const BASE = import.meta.env.BASE_URL;
   const OFFER_PATH = BASE + "offer";
   const UNSUB_PATH = BASE + "unsubscribe";
-  const TERMS_PATH = BASE + "terms";
   function url(screen) {
     const q = new URLSearchParams(location.search);
     if (screen === "offer") q.set("pkg", state.pkg); else q.delete("pkg");
     const qs = q.toString();
-    const path = screen === "offer" ? OFFER_PATH : screen === "unsubscribe" ? UNSUB_PATH : screen === "terms" ? TERMS_PATH : BASE;
+    const path = screen === "offer" ? OFFER_PATH : screen === "unsubscribe" ? UNSUB_PATH : DOCS[screen] ? BASE + screen : BASE;
     return path + (qs ? "?" + qs : "") + (devOn ? "#dev" : "");
   }
   function go(screen, { replace = false, push = true } = {}) {
@@ -494,7 +510,7 @@ import C from "./config.js";
       try { history[replace ? "replaceState" : "pushState"]({ screen, pkg: state.pkg, game: state.game }, "", url(screen)); } catch { /* sandboxed history */ }
     }
     render({ focus: true });
-    const restore = screen === "landing" && (from === "offer" || from === "confirm" || from === "error" || from === "unsubscribe" || from === "terms");
+    const restore = screen === "landing" && (from === "offer" || from === "confirm" || from === "error" || from === "unsubscribe" || !!DOCS[from]);
     const restoreGames = screen === "games" && from === "game";
     if (screen !== "success") scrollTo(0, restore ? state.landingScroll : restoreGames ? state.gamesScroll : 0);
   }
@@ -574,9 +590,13 @@ import C from "./config.js";
     "back-portal"() { go("portal"); },
     "open-game"(el) { state.game = el.dataset.game; go("game"); },
     "back-games"() { go("games"); },
-    terms() { state.termsFrom = state.screen; go("terms"); },
+    // Info pages: opening one from another info page replaces it, so Back always returns to the app screen.
+    doc(page) {
+      if (!DOCS[state.screen]) state.docFrom = state.screen;
+      go(page, { replace: !!DOCS[state.screen] });
+    },
     // Back returns to the page the user came from (history keeps its place); opened cold it goes to the entry screen.
-    "terms-back"() { if (state.termsFrom) history.back(); else go(entry()); },
+    "doc-back"() { if (state.docFrom) history.back(); else go(entry()); },
     genre(el) {
       state.gameGenre = el.dataset.genre;
       document.querySelectorAll(".genre").forEach(b => b.setAttribute("aria-pressed", b === el));
@@ -610,7 +630,7 @@ import C from "./config.js";
     const link = ev.target.closest("a[data-link]");
     if (link && !C.links[link.dataset.link]) {
       ev.preventDefault();
-      if (link.dataset.link === "terms") actions.terms();
+      if (DOCS[link.dataset.link]) actions.doc(link.dataset.link);
       return;
     }
     const el = ev.target.closest("[data-action]");
@@ -696,15 +716,16 @@ import C from "./config.js";
         try { history.replaceState({ screen: "landing", pkg: state.pkg }, "", url("landing")); } catch { /* sandboxed history */ }
         first = "unsubscribe";
       }
-      // Opened straight on /terms: the screen the user would normally land on goes under it, so Back returns there.
-      if (location.pathname.replace(/\/+$/, "") === TERMS_PATH) {
+      // Opened straight on /terms, /privacy or /help: the screen the user would normally land on goes under it, so Back returns there.
+      const docPage = Object.keys(DOCS).find(p => location.pathname.replace(/\/+$/, "") === BASE + p);
+      if (docPage) {
         const under = first === "offer" || first === "unsubscribe" ? "landing" : first;
         try { history.replaceState({ screen: under, pkg: state.pkg }, "", url(under)); } catch { /* sandboxed history */ }
-        state.termsFrom = under;
-        first = "terms";
+        state.docFrom = under;
+        first = docPage;
       }
       state.screen = first;
-      try { history[first === "offer" || first === "unsubscribe" || first === "terms" ? "pushState" : "replaceState"]({ screen: first, pkg: state.pkg }, "", url(first)); } catch { /* sandboxed history */ }
+      try { history[first === "offer" || first === "unsubscribe" || docPage ? "pushState" : "replaceState"]({ screen: first, pkg: state.pkg }, "", url(first)); } catch { /* sandboxed history */ }
       render();
     })
     .catch(() => {
