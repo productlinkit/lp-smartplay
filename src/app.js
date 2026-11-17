@@ -5,7 +5,7 @@ import C from "./config.js";
   const devRoot = document.getElementById("dev");
   const MY_DIGITS = "၀၁၂၃၄၅၆၇၈၉";
   const params = new URLSearchParams(location.search);
-  const SCREENS = ["landing", "offer", "confirm", "success", "portal", "games", "blocked", "error", "unsubscribe"];
+  const SCREENS = ["landing", "offer", "confirm", "success", "portal", "games", "game", "blocked", "error", "unsubscribe", "terms"];
 
   const session = {
     get(k) { try { return JSON.parse(sessionStorage.getItem(k)); } catch { return null; } },
@@ -33,9 +33,12 @@ import C from "./config.js";
     games: null,            // PlayVerse catalogue, loaded the first time it is opened
     gameQuery: "",
     gameGenre: "all",
+    game: null,             // id of the game shown on the detail screen
+    gamesScroll: 0,         // catalogue scroll position, restored when coming back from a game
     landingScroll: 0,
     msisdn: params.get("msisdn") || "",
     unsub: null,            // null (form) | "invalid" | "failed"
+    termsFrom: null,        // screen the Terms page was opened from; its Back button returns there
   };
   let dict = { en: {}, my: {} };
 
@@ -60,7 +63,8 @@ import C from "./config.js";
     const s = q.toString();
     return s ? url + (url.includes("?") ? "&" : "?") + s : url;
   }
-  const linkHref = key => C.links[key] ? forwardQuery(C.links[key]) : "#";
+  // An empty C.links.terms uses the built-in Terms page; other empty links stay inert.
+  const linkHref = key => C.links[key] ? forwardQuery(C.links[key]) : key === "terms" ? url("terms") : "#";
 
   // ── Icons ───────────────────────────────────────────────────────────
   const ICON = {
@@ -72,6 +76,7 @@ import C from "./config.js";
     back: '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>',
     search: '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>',
     close: '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>',
+    play: '<svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor" aria-hidden="true"><path d="M8 5.2v13.6a1 1 0 0 0 1.5.86l11-6.8a1 1 0 0 0 0-1.72l-11-6.8A1 1 0 0 0 8 5.2z"/></svg>',
   };
 
   // ── Shared pieces ───────────────────────────────────────────────────
@@ -257,7 +262,7 @@ import C from "./config.js";
       </div>` : ""}`;
   }
 
-  // PlayVerse catalogue: the Mega Combo games from the Smart Play portal, each tile opens the game itself.
+  // PlayVerse catalogue: the Mega Combo games from the Smart Play portal, each tile opens that game's detail screen.
   function games() {
     const list = state.games || [];
     const counts = {};
@@ -289,12 +294,67 @@ import C from "./config.js";
     const q = state.gameQuery.trim().toLowerCase();
     const shown = (state.games || []).filter(g => (state.gameGenre === "all" || g.genre === state.gameGenre) && (!q || g.name.toLowerCase().includes(q)));
     if (!shown.length) return `<li class="panel game-empty">${esc(t("games.empty"))}</li>`;
-    return shown.map(g => `
-      <li><a class="game" href="${esc(g.url)}" target="_blank" rel="noopener">
+    return shown.map(gameTile).join("");
+  }
+
+  const gameTile = g => `
+      <li><button type="button" class="game" data-action="open-game" data-game="${esc(g.id)}">
         <span class="game-thumb">${g.thumb ? `<img src="${esc(g.thumb)}" alt="" width="240" height="240" loading="lazy">` : ""}</span>
         <span class="game-name">${esc(g.name)}</span>
         <span class="game-genre">${esc(g.genre)}</span>
-      </a></li>`).join("");
+      </button></li>`;
+
+  const currentGame = () => (state.games || []).find(g => g.id === state.game);
+
+  // Game detail: cover, genre, short pitch, Play button (opens the game in a new tab) and more games of the same genre.
+  function game() {
+    const g = currentGame();
+    const head = `
+        <header class="panel catalog-head">
+          <div class="catalog-title">
+            <button type="button" class="icon-btn" data-action="back-games" aria-label="${esc(t("a11y.back"))}">${ICON.back}</button>
+            <img src="assets/playverse.webp" alt="" width="44" height="44">
+            <div class="app-text">
+              <p class="app-name">PlayVerse</p>
+              <p class="catalog-sub">${esc(t("games.count", { n: num((state.games || []).length) }))}</p>
+            </div>
+          </div>
+        </header>`;
+    if (!g) return `<div class="screen">${head}<section class="panel status"><h1 tabindex="-1">${esc(t("game.notFound"))}</h1></section></div>`;
+
+    const pitchKey = `game.genre.${g.genre}`;
+    const pitch = dict.en[pitchKey] ? t(pitchKey) : "";
+    const more = state.games.filter(x => x.genre === g.genre && x.id !== g.id).slice(0, 6);
+    const feat = key => `<li><span class="game-feat-ok">${ICON.checkWhite}</span>${esc(t(key))}</li>`;
+    return `
+      <div class="screen">
+        ${head}
+        <section class="panel game-hero">
+          <div class="game-cover">
+            ${g.thumb ? `<img class="game-cover-bg" src="${esc(g.thumb)}" alt="" aria-hidden="true">
+            <img class="game-cover-fg" src="${esc(g.thumb)}" alt="" width="240" height="240">` : ""}
+          </div>
+          <div class="game-info">
+            <h1 tabindex="-1">${esc(g.name)}</h1>
+            <p class="game-tags"><span class="tag">${esc(g.genre)}</span>${g.service === "h5" ? '<span class="tag">HTML5</span>' : ""}</p>
+            ${pitch ? `<p class="game-pitch">${esc(pitch)}</p>` : ""}
+          </div>
+          <a class="btn btn-primary btn-lg" href="${esc(g.url)}" target="_blank" rel="noopener">${ICON.play}${esc(t("game.play"))}</a>
+          <p class="game-note">${esc(t("game.newTab"))}</p>
+        </section>
+
+        <section class="panel game-about" aria-labelledby="about-title">
+          <h2 class="section-title" id="about-title">${esc(t("game.about"))}</h2>
+          <p>${esc(t("game.desc", { name: g.name }))}</p>
+          <ul class="game-feats">${feat("game.feat.instant")}${feat("game.feat.noDownload")}${feat("game.feat.included")}</ul>
+        </section>
+
+        ${more.length ? `
+        <section class="panel game-more" aria-labelledby="more-title">
+          <h2 class="section-title" id="more-title">${esc(t("game.more", { genre: g.genre }))}</h2>
+          <ul class="game-grid game-row">${more.map(gameTile).join("")}</ul>
+        </section>` : ""}
+      </div>`;
   }
 
   const status = (icon, titleKey, textKey, actions) => `
@@ -347,7 +407,39 @@ import C from "./config.js";
     return /^959\d{7,9}$/.test(d) ? d : null;
   }
 
-  const VIEWS = { landing, offer, confirm, success, portal, games, blocked, error, unsubscribe };
+  // Terms & Conditions: section copy lives in i18n under "terms.<id>.title" / "terms.<id>.body".
+  const TERMS_SECTIONS = ["about", "packages", "free", "renew", "cancel", "data", "eligibility", "content", "changes", "contact"];
+  function termsDate() {
+    const [y, m, d] = C.termsUpdated.split("-").map(Number);
+    return state.lang === "en"
+      ? new Date(y, m - 1, d).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" })
+      : num(`${d}.${m}.${y}`);
+  }
+  function terms() {
+    const vars = { daily: price(pkgById("daily")), threeDay: price(pkgById("3day")), cancelCode: C.cancelCode };
+    const sections = TERMS_SECTIONS.map(id => `
+          <section aria-labelledby="terms-${id}">
+            <h2 id="terms-${id}">${esc(t(`terms.${id}.title`))}</h2>
+            <p>${esc(t(`terms.${id}.body`, vars))}</p>
+            ${id === "cancel" ? `<p><a class="text-link" href="${esc(url("unsubscribe"))}" data-action="unsubscribe">${esc(t("unsub.title"))}</a></p>` : ""}
+          </section>`).join("");
+    return `
+      <div class="screen">
+        ${topbar()}
+        <article class="panel terms" aria-labelledby="terms-title">
+          <div class="terms-head">
+            <button type="button" class="icon-btn" data-action="terms-back" aria-label="${esc(t("a11y.back"))}">${ICON.back}</button>
+            <h1 id="terms-title" tabindex="-1">${esc(t("terms.title"))}</h1>
+          </div>
+          <p class="terms-date">${esc(t("terms.updated", { date: termsDate() }))}</p>
+          <p class="terms-intro">${esc(t("terms.intro"))}</p>
+          ${sections}
+          <button type="button" class="btn btn-ghost" data-action="terms-back">${esc(t("terms.back"))}</button>
+        </article>
+      </div>`;
+  }
+
+  const VIEWS = { landing, offer, confirm, success, portal, games, game, blocked, error, unsubscribe, terms };
 
   // ── Rendering & navigation ──────────────────────────────────────────
   let observer = null;
@@ -383,25 +475,28 @@ import C from "./config.js";
   const BASE = import.meta.env.BASE_URL;
   const OFFER_PATH = BASE + "offer";
   const UNSUB_PATH = BASE + "unsubscribe";
+  const TERMS_PATH = BASE + "terms";
   function url(screen) {
     const q = new URLSearchParams(location.search);
     if (screen === "offer") q.set("pkg", state.pkg); else q.delete("pkg");
     const qs = q.toString();
-    const path = screen === "offer" ? OFFER_PATH : screen === "unsubscribe" ? UNSUB_PATH : BASE;
+    const path = screen === "offer" ? OFFER_PATH : screen === "unsubscribe" ? UNSUB_PATH : screen === "terms" ? TERMS_PATH : BASE;
     return path + (qs ? "?" + qs : "") + (devOn ? "#dev" : "");
   }
   function go(screen, { replace = false, push = true } = {}) {
     if (state.screen === "landing" && screen !== "landing" && screen !== "success") state.landingScroll = scrollY;
+    if (state.screen === "games" && screen === "game") state.gamesScroll = scrollY;
     const from = state.screen;
     state.screen = screen;
     state.busy = false;
     state.sheet = false;
     if (push) {
-      try { history[replace ? "replaceState" : "pushState"]({ screen, pkg: state.pkg }, "", url(screen)); } catch { /* sandboxed history */ }
+      try { history[replace ? "replaceState" : "pushState"]({ screen, pkg: state.pkg, game: state.game }, "", url(screen)); } catch { /* sandboxed history */ }
     }
     render({ focus: true });
-    const restore = screen === "landing" && (from === "offer" || from === "confirm" || from === "error" || from === "unsubscribe");
-    if (screen !== "success") scrollTo(0, restore ? state.landingScroll : 0);
+    const restore = screen === "landing" && (from === "offer" || from === "confirm" || from === "error" || from === "unsubscribe" || from === "terms");
+    const restoreGames = screen === "games" && from === "game";
+    if (screen !== "success") scrollTo(0, restore ? state.landingScroll : restoreGames ? state.gamesScroll : 0);
   }
 
   function entry() {
@@ -415,6 +510,24 @@ import C from "./config.js";
     el.className = "toast"; el.setAttribute("role", "status"); el.textContent = msg;
     document.body.appendChild(el);
     setTimeout(() => el.remove(), 2600);
+  }
+
+  // Loads games.json once; each game gets an id from its name ("Mahjong Royal" → "mahjong-royal") for the detail screen.
+  // Resolves with the list; on failure it shows a toast and stays pending, so callers never navigate.
+  function loadGames() {
+    if (state.games) return Promise.resolve(state.games);
+    return fetch(C.apps.find(a => a.catalog).catalog).then(r => r.json())
+      .then(list => {
+        const seen = {};
+        list.forEach(g => {
+          const base = g.name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "") || "game";
+          seen[base] = (seen[base] || 0) + 1;
+          g.id = seen[base] > 1 ? `${base}-${seen[base]}` : base;
+        });
+        state.games = list;
+        return list;
+      })
+      .catch(() => { toast("games.json could not be loaded"); return new Promise(() => {}); });
   }
 
   // ── Actions ─────────────────────────────────────────────────────────
@@ -457,13 +570,13 @@ import C from "./config.js";
       state.sheet = false; render();
       app.querySelector('[data-action="how-cancel"]')?.focus();
     },
-    "open-catalog"() {
-      if (state.games) { go("games"); return; }
-      fetch(C.apps.find(a => a.catalog).catalog).then(r => r.json())
-        .then(list => { state.games = list; go("games"); })
-        .catch(() => toast("games.json could not be loaded"));
-    },
+    "open-catalog"() { loadGames().then(() => go("games")); },
     "back-portal"() { go("portal"); },
+    "open-game"(el) { state.game = el.dataset.game; go("game"); },
+    "back-games"() { go("games"); },
+    terms() { state.termsFrom = state.screen; go("terms"); },
+    // Back returns to the page the user came from (history keeps its place); opened cold it goes to the entry screen.
+    "terms-back"() { if (state.termsFrom) history.back(); else go(entry()); },
     genre(el) {
       state.gameGenre = el.dataset.genre;
       document.querySelectorAll(".genre").forEach(b => b.setAttribute("aria-pressed", b === el));
@@ -476,8 +589,14 @@ import C from "./config.js";
     "dev-set"(el) { sim[el.dataset.key] = el.dataset.val; saveSim(); renderDev(); },
     "dev-go"(el) {
       const s = el.dataset.screen;
-      if ((s === "portal" || s === "games") && !state.plan) state.plan = state.pkg;
-      if (s === "games" && !state.games) { actions["open-catalog"](); return; }
+      if ((s === "portal" || s === "games" || s === "game") && !state.plan) state.plan = state.pkg;
+      if (s === "games" || s === "game") {
+        loadGames().then(list => {
+          if (s === "game" && !currentGame()) state.game = list[0]?.id;
+          go(s);
+        });
+        return;
+      }
       go(s);
     },
     "dev-reset"() {
@@ -489,7 +608,11 @@ import C from "./config.js";
 
   document.addEventListener("click", ev => {
     const link = ev.target.closest("a[data-link]");
-    if (link && !C.links[link.dataset.link]) { ev.preventDefault(); return; }
+    if (link && !C.links[link.dataset.link]) {
+      ev.preventDefault();
+      if (link.dataset.link === "terms") actions.terms();
+      return;
+    }
     const el = ev.target.closest("[data-action]");
     if (!el || el.disabled) return;
     actions[el.dataset.action]?.(el, ev);
@@ -530,7 +653,8 @@ import C from "./config.js";
   });
   addEventListener("popstate", ev => {
     const s = ev.state?.screen;
-    if (s === "games" && !state.games) { go("portal", { push: false }); return; }
+    if ((s === "games" || s === "game") && !state.games) { go("portal", { push: false }); return; }
+    if (s === "game") state.game = ev.state.game;
     if (s === "offer" && ev.state.pkg) state.pkg = pkgById(ev.state.pkg).id;
     if (SCREENS.includes(s)) go(s, { push: false });
   });
@@ -572,8 +696,15 @@ import C from "./config.js";
         try { history.replaceState({ screen: "landing", pkg: state.pkg }, "", url("landing")); } catch { /* sandboxed history */ }
         first = "unsubscribe";
       }
+      // Opened straight on /terms: the screen the user would normally land on goes under it, so Back returns there.
+      if (location.pathname.replace(/\/+$/, "") === TERMS_PATH) {
+        const under = first === "offer" || first === "unsubscribe" ? "landing" : first;
+        try { history.replaceState({ screen: under, pkg: state.pkg }, "", url(under)); } catch { /* sandboxed history */ }
+        state.termsFrom = under;
+        first = "terms";
+      }
       state.screen = first;
-      try { history[first === "offer" || first === "unsubscribe" ? "pushState" : "replaceState"]({ screen: first, pkg: state.pkg }, "", url(first)); } catch { /* sandboxed history */ }
+      try { history[first === "offer" || first === "unsubscribe" || first === "terms" ? "pushState" : "replaceState"]({ screen: first, pkg: state.pkg }, "", url(first)); } catch { /* sandboxed history */ }
       render();
     })
     .catch(() => {

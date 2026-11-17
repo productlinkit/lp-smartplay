@@ -19,7 +19,9 @@ export default {
     { id: "playverse", name: "PlayVerse", icon: "assets/playverse.webp", url: "", catalog: "games.json" },
   ],
 
+  // Leave "terms" empty to use the built-in Terms page (/terms); set a URL to send the link elsewhere instead.
   links: { terms: "", privacy: "", help: "" },
+  termsUpdated: "2026-11-17",   // "Last updated" date on the Terms page (YYYY-MM-DD)
 
   // Unsubscribe API (GET, JSON). The page appends ?msisdn=959…; a "msisdn" in the page's own URL prefills the number.
   unsubscribeUrl: "https://staging.smart-play.mobi/api/portal/unsubscribe",
