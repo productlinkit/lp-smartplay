@@ -410,9 +410,9 @@ import C from "./config.js";
   // Info pages (Terms, Privacy, Help). Copy lives in i18n as "<page>.title", "<page>.intro" and "<page>.<id>.title|body".
   // "faq" pages show each section as a tap-to-open question; "unsub" sections get a link to the Unsubscribe page.
   const DOCS = {
-    terms: { sections: ["about", "packages", "free", "renew", "cancel", "data", "eligibility", "content", "changes", "contact"], unsub: ["cancel"] },
+    terms: { sections: ["about", "packages", "free", "activation", "renew", "cancel", "privacy"], unsub: ["cancel"] },
     privacy: { sections: ["collect", "use", "share", "keep", "security", "browser", "choices", "children", "changes", "contact"], unsub: ["choices"] },
-    help: { sections: ["subscribe", "price", "data", "failed", "apps", "game", "cancel", "contact"], unsub: ["cancel"], faq: true },
+    help: { sections: ["about", "trial", "subscribe", "price", "data", "failed", "apps", "game", "cancel", "contact"], unsub: ["cancel"], faq: true },
   };
   function docDate(page) {
     const iso = C.docsUpdated[page];
@@ -422,11 +422,24 @@ import C from "./config.js";
       ? new Date(y, m - 1, d).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" })
       : num(`${d}.${m}.${y}`);
   }
+  // Body copy: each line is a paragraph; lines starting with "•" become a bullet list.
+  function rich(text) {
+    let html = "", items = [];
+    const flush = () => { if (items.length) { html += `<ul>${items.join("")}</ul>`; items = []; } };
+    for (const line of text.split("\n")) {
+      const m = line.match(/^•\s*(.*)$/);
+      if (m) { items.push(`<li>${esc(m[1])}</li>`); continue; }
+      flush();
+      if (line.trim()) html += `<p>${esc(line)}</p>`;
+    }
+    flush();
+    return html;
+  }
   function doc(page) {
     const { sections, unsub, faq } = DOCS[page];
     const vars = { daily: price(pkgById("daily")), threeDay: price(pkgById("3day")), cancelCode: C.cancelCode };
     const body = id => `
-            <p>${esc(t(`${page}.${id}.body`, vars))}</p>
+            ${rich(t(`${page}.${id}.body`, vars))}
             ${unsub.includes(id) ? `<p><a class="text-link" href="${esc(url("unsubscribe"))}" data-action="unsubscribe">${esc(t("unsub.title"))}</a></p>` : ""}`;
     const list = sections.map(id => faq ? `
           <details class="faq">

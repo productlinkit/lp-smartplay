@@ -1,7 +1,7 @@
 // All Smart Play settings live here. User-facing copy lives in i18n/my.json and i18n/en.json;
 // each package and app is named there under the same id used below.
 export default {
-  cancelCode: "*XXXX#",   // placeholder until ATOM assigns the real code
+  cancelCode: "*1414#",
   defaultLang: "my",
   defaultPackage: "3day",
 
@@ -22,7 +22,7 @@ export default {
   // Leave a link empty to use the built-in page (/terms, /privacy, /help); set a URL to send the link elsewhere instead.
   links: { terms: "", privacy: "", help: "" },
   // "Last updated" date shown on the built-in pages (YYYY-MM-DD); a page without one shows no date.
-  docsUpdated: { terms: "2026-11-17", privacy: "2026-11-17" },
+  docsUpdated: { terms: "2026-11-18", privacy: "2026-11-17" },
 
   // Unsubscribe API (GET, JSON). The page appends ?msisdn=959…; a "msisdn" in the page's own URL prefills the number.
   unsubscribeUrl: "https://staging.smart-play.mobi/api/portal/unsubscribe",

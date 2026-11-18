@@ -344,6 +344,8 @@ button.game { width: 100%; border: 0; padding: 0; text-align: left; color: var(-
 :lang(my) .doc h2 { font-weight: 700; line-height: 1.7; }
 .doc section p, .faq-body p { color: var(--ink-muted); line-height: 1.65; overflow-wrap: anywhere; }
 :lang(my) .doc section p, :lang(my) .faq-body p { line-height: 1.9; }
+.doc section ul, .faq-body ul { margin: 0; padding-left: 1.25em; display: grid; gap: 4px; color: var(--ink-muted); line-height: 1.65; overflow-wrap: anywhere; }
+:lang(my) .doc section ul, :lang(my) .faq-body ul { line-height: 1.9; }
 
 .faq { border-radius: 16px; background: var(--yellow-soft); }
 .faq summary {
